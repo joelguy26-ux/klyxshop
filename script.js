@@ -1,4 +1,12 @@
-e// Mobile Navigation Toggle
+e// Shopify Integration Configuration (moved to top)
+const SHOPIFY_CONFIG = {
+    store: 'your-store-name', // Replace with your Shopify store name (without .myshopify.com)
+    apiKey: 'your-api-key',   // Replace with your Shopify API key
+    apiVersion: '2023-10',
+    enabled: false // Set to true when ready to connect to Shopify
+};
+
+// Mobile Navigation Toggle
 const mobileMenu = document.getElementById('mobile-menu');
 const navMenu = document.querySelector('.nav-center');
 
@@ -551,13 +559,6 @@ function searchProducts(query) {
     );
 }
 
-// Shopify Integration Configuration
-const SHOPIFY_CONFIG = {
-    store: 'your-store-name', // Replace with your Shopify store name (without .myshopify.com)
-    apiKey: 'your-api-key',   // Replace with your Shopify API key
-    apiVersion: '2023-10',
-    enabled: false // Set to true when ready to connect to Shopify
-};
 
 // Shopify API Integration
 async function fetchProductsFromShopify() {
