@@ -568,11 +568,47 @@ async function fetchProductsFromShopify() {
     }
 
     try {
-        const response = await fetch(`https://${SHOPIFY_CONFIG.store}.myshopify.com/admin/api/${SHOPIFY_CONFIG.apiVersion}/products.json`, {
-            headers: {
-                'X-Shopify-Access-Token': SHOPIFY_CONFIG.apiKey,
-                'Content-Type': 'application/json'
+        // Use Storefront API instead of Admin API to avoid CORS issues
+        const query = `
+            query {
+                products(first: 50) {
+                    edges {
+                        node {
+                            id
+                            title
+                            handle
+                            description
+                            images(first: 1) {
+                                edges {
+                                    node {
+                                        url
+                                    }
+                                }
+                            }
+                            variants(first: 1) {
+                                edges {
+                                    node {
+                                        price {
+                                            amount
+                                        }
+                                        availableForSale
+                                    }
+                                }
+                            }
+                            tags
+                        }
+                    }
+                }
             }
+        `;
+
+        const response = await fetch(`https://${SHOPIFY_CONFIG.store}.myshopify.com/api/2023-10/graphql.json`, {
+            method: 'POST',
+            headers: {
+                'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.apiKey,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query })
         });
 
         if (!response.ok) {
@@ -582,17 +618,23 @@ async function fetchProductsFromShopify() {
         const data = await response.json();
         
         // Convert Shopify products to our format
-        const shopifyProducts = data.products.map(product => ({
-            id: product.id.toString(),
-            name: product.title.toUpperCase(),
-            price: parseFloat(product.variants[0]?.price || 0),
-            image: product.images[0]?.src || 'https://via.placeholder.com/400x400',
-            soldOut: !product.variants[0]?.available || false,
-            collection: product.tags.includes('featured') ? 'featured' : 'myrtle',
-            description: product.body_html,
-            handle: product.handle,
-            tags: product.tags.split(',').map(tag => tag.trim())
-        }));
+        const shopifyProducts = data.data.products.edges.map(edge => {
+            const product = edge.node;
+            const variant = product.variants.edges[0]?.node;
+            const image = product.images.edges[0]?.node;
+            
+            return {
+                id: product.id.split('/').pop(), // Extract ID from GraphQL ID
+                name: product.title.toUpperCase(),
+                price: parseFloat(variant?.price?.amount || 0),
+                image: image?.url || 'https://via.placeholder.com/400x400',
+                soldOut: !variant?.availableForSale || false,
+                collection: product.tags.includes('featured') ? 'featured' : 'myrtle',
+                description: product.description,
+                handle: product.handle,
+                tags: product.tags
+            };
+        });
 
         // Import the products
         importProducts(shopifyProducts);
