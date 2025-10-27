@@ -1,9 +1,9 @@
-e// Shopify Integration Configuration (moved to top)
-const SHOPIFY_CONFIG = {
-    store: 'your-store-name', // Replace with your Shopify store name (without .myshopify.com)
-    apiKey: 'your-api-key',   // Replace with your Shopify API key
+e// Declare and initialize the SHOPIFY_CONFIG object
+let SHOPIFY_CONFIG = {
+    store: '',
+    apiKey: '',
     apiVersion: '2023-10',
-    enabled: false // Set to true when ready to connect to Shopify
+    enabled: false
 };
 
 // Mobile Navigation Toggle
@@ -663,7 +663,7 @@ function enableShopifyIntegration(storeName, apiKey) {
     SHOPIFY_CONFIG.store = storeName;
     SHOPIFY_CONFIG.apiKey = apiKey;
     SHOPIFY_CONFIG.enabled = true;
-    
+
     console.log('🔄 Shopify integration enabled. Reloading products...');
     initializeProducts();
 }
