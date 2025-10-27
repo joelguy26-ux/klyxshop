@@ -1,4 +1,4 @@
-e// Declare and initialize the SHOPIFY_CONFIG object
+// Declare and initialize the SHOPIFY_CONFIG object
 let SHOPIFY_CONFIG = {
     store: '',
     apiKey: '',
