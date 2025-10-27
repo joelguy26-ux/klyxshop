@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KLYXSHOP - Premium Essentials</title>
+    <meta name="description" content="Discover premium essentials at KLYXSHOP - quality without excess. Shop our curated collection of timeless pieces." />
+    <meta name="author" content="KLYXSHOP" />
+
+    <meta property="og:title" content="KLYXSHOP - Premium Essentials" />
+    <meta property="og:description" content="Discover premium essentials at KLYXSHOP - quality without excess." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@klyxshop" />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <!-- Top bar with currency selector -->
+        <div class="top-bar">
+            <div class="container">
+                <button class="currency-selector">
+                    United States (USD $)
+                </button>
+            </div>
+        </div>
+
+        <!-- Main navigation -->
+        <div class="container">
+            <div class="nav-main">
+                <!-- Mobile Menu & Search -->
+                <div class="nav-left">
+                    <button class="mobile-menu-btn" id="mobile-menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="nav-center">
+                    <a href="#" class="nav-link">HOME</a>
+
+                    <!-- Logo -->
+                    <a href="#" class="logo">
+                        <div class="logo-text">KLYXSHOP</div>
+                    </a>
+
+                    <a href="#" class="nav-link">SHOP</a>
+                </nav>
+
+                <!-- Logo for mobile -->
+                <a href="#" class="mobile-logo">
+                    <div class="logo-text">KLYXSHOP</div>
+                </a>
+
+                <!-- Icons -->
+                <div class="nav-right">
+                    <button class="nav-icon">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="nav-icon" onclick="toggleCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section - Three Column Feature -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hero Image 1" />
+                </div>
+
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hero Image 2" />
+                </div>
+
+                <div class="hero-card">
+                    <img src="https://images.unsplash.com/photo-1472851294608-062f824d29cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hero Image 3" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collection Section -->
+    <section class="collection-section">
+        <div class="container">
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="WRAITH SHIRT" />
+                        <div class="sold-out-badge">Sold Out</div>
+                    </div>
+                    <h3 class="product-name">WRAITH SHIRT</h3>
+                    <p class="product-price">$40.00</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="SOLSTICE THERMAL" />
+                        <div class="sold-out-badge">Sold Out</div>
+                    </div>
+                    <h3 class="product-name">SOLSTICE THERMAL</h3>
+                    <p class="product-price">$62.00</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="MYRTLE THERMAL" />
+                        <div class="sold-out-badge">Sold Out</div>
+                    </div>
+                    <h3 class="product-name">MYRTLE THERMAL</h3>
+                    <p class="product-price">$62.00</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="SPOTLIGHT HOODIE" />
+                    </div>
+                    <h3 class="product-name">SPOTLIGHT HOODIE</h3>
+                    <p class="product-price">$68.00</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="CAMO JORTS" />
+                    </div>
+                    <h3 class="product-name">CAMO JORTS</h3>
+                    <p class="product-price">$62.00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-section">
+        <div class="container">
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="WHITE WAR THERMAL" />
+                    </div>
+                    <h3 class="product-name">WHITE WAR THERMAL</h3>
+                    <p class="product-price">$58.00</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="BLACK WAR THERMAL" />
+                    </div>
+                    <h3 class="product-name">BLACK WAR THERMAL</h3>
+                    <p class="product-price">$58.00</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="TIGER THERMAL" />
+                    </div>
+                    <h3 class="product-name">TIGER THERMAL</h3>
+                    <p class="product-price">$62.00</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="BLACK LEOPARD CREWNECK" />
+                        <div class="sold-out-badge">Sold Out</div>
+                    </div>
+                    <h3 class="product-name">BLACK LEOPARD CREWNECK</h3>
+                    <p class="product-price">$68.00</p>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="BLACK LEOPARD SWEATS" />
+                    </div>
+                    <h3 class="product-name">BLACK LEOPARD SWEATS</h3>
+                    <p class="product-price">$62.00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <p class="newsletter-text">
+                    Be the first to know about our biggest and best sales. We'll never send more than one email a month.
+                </p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" class="newsletter-input" />
+                    <button class="newsletter-btn">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>SHOP</h4>
+                    <ul>
+                        <li><a href="#">Search</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>HELP</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-currency">
+                <button class="currency-selector">United States (USD $)</button>
+            </div>
+
+            <!-- Payment Icons -->
+            <div class="payment-icons">
+                <div class="payment-icon">AMEX</div>
+                <div class="payment-icon">APPLE PAY</div>
+                <div class="payment-icon">DINERS</div>
+                <div class="payment-icon">DISCOVER</div>
+                <div class="payment-icon">GOOGLE PAY</div>
+                <div class="payment-icon">MASTERCARD</div>
+                <div class="payment-icon">PAYPAL</div>
+                <div class="payment-icon">SHOP PAY</div>
+                <div class="payment-icon">VISA</div>
+            </div>
+
+            <div class="footer-brand">
+                <p>KLYXSHOP LOS ANGELES</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Promotional Modal -->
+    <div id="promo-modal" class="promo-modal">
+        <div class="promo-content">
+            <button class="close-promo" onclick="closePromoModal()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="promo-body">
+                <h2 class="promo-logo">KLYXSHOP</h2>
+                <p class="promo-unlock">UNLOCK</p>
+                <p class="promo-discount">10% OFF</p>
+                <p class="promo-order">YOUR ORDER</p>
+
+                <input type="tel" placeholder="What is your phone number?" class="promo-input" />
+
+                <p class="promo-disclaimer">
+                    *By providing your number and clicking the button, you agree to receive recurring auto-dialed marketing SMS (including cart reminders; AI content; artificial or prerecorded voices) and our{" "}
+                    <a href="#" class="promo-link">TERMS OF SERVICE</a>{" "}
+                    (including arbitration); you don't need to provide this as a condition of any purchase; message and data rates may apply. Msg frequency varies. Reply HELP for help; STOP to opt-out. View{" "}
+                    <a href="#" class="promo-link">PRIVACY POLICY</a>.
+                </p>
+
+                <button class="promo-signup-btn">
+                    <div class="signup-text">
+                        <span>Sign up now</span>
+                        <span class="signup-subtext">to subscribe to texts</span>
+                    </div>
+                </button>
+
+                <button class="promo-no-thanks" onclick="closePromoModal()">
+                    No Thanks
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Shopping Cart Modal -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-cart" onclick="toggleCart()">&times;</button>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>Your cart is empty</p>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total: $<span id="cart-total">0.00</span></strong>
+                </div>
+                <button class="btn btn-primary checkout-btn" onclick="checkout()">
+                    <i class="fas fa-credit-card"></i> Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
