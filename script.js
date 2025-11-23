@@ -560,7 +560,7 @@ function searchProducts(query) {
 }
 
 
-// Shopify API Integration
+// Shopify API Integration - Fetch products from collections
 async function fetchProductsFromShopify() {
     if (!SHOPIFY_CONFIG.enabled) {
         console.log('Shopify integration disabled. Using sample data.');
@@ -568,34 +568,43 @@ async function fetchProductsFromShopify() {
     }
 
     try {
-        // Use Storefront API instead of Admin API to avoid CORS issues
+        // First, get all collections and their products
         const query = `
             query {
-                products(first: 50) {
+                collections(first: 20) {
                     edges {
                         node {
                             id
                             title
                             handle
-                            description
-                            images(first: 1) {
+                            products(first: 50) {
                                 edges {
                                     node {
-                                        url
-                                    }
-                                }
-                            }
-                            variants(first: 1) {
-                                edges {
-                                    node {
-                                        price {
-                                            amount
+                                        id
+                                        title
+                                        handle
+                                        description
+                                        images(first: 1) {
+                                            edges {
+                                                node {
+                                                    url
+                                                }
+                                            }
                                         }
-                                        availableForSale
+                                        variants(first: 1) {
+                                            edges {
+                                                node {
+                                                    price {
+                                                        amount
+                                                    }
+                                                    availableForSale
+                                                }
+                                            }
+                                        }
+                                        tags
                                     }
                                 }
                             }
-                            tags
                         }
                     }
                 }
@@ -617,28 +626,59 @@ async function fetchProductsFromShopify() {
 
         const data = await response.json();
         
-        // Convert Shopify products to our format
-        const shopifyProducts = data.data.products.edges.map(edge => {
-            const product = edge.node;
-            const variant = product.variants.edges[0]?.node;
-            const image = product.images.edges[0]?.node;
-            
-            return {
-                id: product.id.split('/').pop(), // Extract ID from GraphQL ID
-                name: product.title.toUpperCase(),
-                price: parseFloat(variant?.price?.amount || 0),
-                image: image?.url || 'https://via.placeholder.com/400x400',
-                soldOut: !variant?.availableForSale || false,
-                collection: product.tags.includes('featured') ? 'featured' : 'myrtle',
-                description: product.description,
-                handle: product.handle,
-                tags: product.tags
-            };
+        // Extract products from all collections
+        const allProducts = [];
+        
+        if (data.data?.collections?.edges) {
+            data.data.collections.edges.forEach(collectionEdge => {
+                const collection = collectionEdge.node;
+                const collectionName = collection.title.toLowerCase();
+                
+                if (collection.products?.edges) {
+                    collection.products.edges.forEach(productEdge => {
+                        const product = productEdge.node;
+                        const variant = product.variants.edges[0]?.node;
+                        const image = product.images.edges[0]?.node;
+                        
+                        // Determine collection assignment
+                        let productCollection = 'myrtle';
+                        if (product.tags.includes('featured') || collectionName.includes('featured')) {
+                            productCollection = 'featured';
+                        } else if (collectionName.includes('myrtle')) {
+                            productCollection = 'myrtle';
+                        }
+                        
+                        allProducts.push({
+                            id: product.id.split('/').pop(), // Extract ID from GraphQL ID
+                            name: product.title.toUpperCase(),
+                            price: parseFloat(variant?.price?.amount || 0),
+                            image: image?.url || 'https://via.placeholder.com/400x400',
+                            soldOut: !variant?.availableForSale || false,
+                            collection: productCollection,
+                            description: product.description,
+                            handle: product.handle,
+                            tags: product.tags,
+                            collectionName: collection.title
+                        });
+                    });
+                }
+            });
+        }
+
+        // Remove duplicates (products might be in multiple collections)
+        const uniqueProducts = [];
+        const seenIds = new Set();
+        
+        allProducts.forEach(product => {
+            if (!seenIds.has(product.id)) {
+                seenIds.add(product.id);
+                uniqueProducts.push(product);
+            }
         });
 
         // Import the products
-        importProducts(shopifyProducts);
-        console.log(`✅ Successfully loaded ${shopifyProducts.length} products from Shopify!`);
+        importProducts(uniqueProducts);
+        console.log(`✅ Successfully loaded ${uniqueProducts.length} products from ${data.data?.collections?.edges?.length || 0} collections!`);
         return true;
 
     } catch (error) {
