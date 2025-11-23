@@ -553,6 +553,11 @@ function createBuyButtonsForProducts() {
     }
 
     document.querySelectorAll('.shopify-buy-button').forEach((buttonContainer, index) => {
+        // Skip if button already created
+        if (buttonContainer.hasAttribute('data-button-created')) {
+            return;
+        }
+
         const productHandle = buttonContainer.getAttribute('data-product-handle');
         if (!productHandle) {
             console.log('⚠️ No product handle found for buy button');
@@ -560,12 +565,21 @@ function createBuyButtonsForProducts() {
         }
 
         try {
+            // Create product component but hide everything except the button
             shopifyBuyUI.createComponent('product', {
                 handle: productHandle,
                 node: buttonContainer,
                 moneyFormat: '${{amount}}',
                 options: {
                     product: {
+                        contents: {
+                            img: false,
+                            imgWithCarousel: false,
+                            title: false,
+                            price: false,
+                            button: true,
+                            buttonWithQuantity: false
+                        },
                         styles: {
                             button: {
                                 'background-color': '#000000',
@@ -574,7 +588,9 @@ function createBuyButtonsForProducts() {
                                 },
                                 ':focus': {
                                     'background-color': '#000000'
-                                }
+                                },
+                                'width': '100%',
+                                'margin': '0'
                             }
                         },
                         text: {
@@ -606,6 +622,9 @@ function createBuyButtonsForProducts() {
                     }
                 }
             });
+            
+            // Mark as created
+            buttonContainer.setAttribute('data-button-created', 'true');
         } catch (error) {
             console.error('Error creating buy button for', productHandle, error);
         }
@@ -958,9 +977,9 @@ async function initializeProducts() {
     const shopifyLoaded = await fetchProductsFromShopify();
     
     if (!shopifyLoaded) {
-        // Fallback to sample data
-        products = [...sampleProducts];
-        console.log('📦 Using sample product data');
+        // No Shopify products - keep products array empty
+        products = [];
+        console.log('⚠️ No Shopify products loaded. Product sections will be empty.');
     }
     
     // Load collections
@@ -969,10 +988,16 @@ async function initializeProducts() {
     // Render products organized by collections
     if (products.length > 0 && products.some(p => p.collectionName)) {
         renderProductsByCollections();
-    } else {
+    } else if (products.length > 0) {
         // Fallback to old method if no collection names
         renderProducts('.collection-section .product-grid', 'myrtle');
         renderProducts('.featured-section .product-grid', 'featured');
+    } else {
+        // No products - clear all product grids
+        const collectionGrid = document.querySelector('.collection-section .product-grid');
+        const featuredGrid = document.querySelector('.featured-section .product-grid');
+        if (collectionGrid) collectionGrid.innerHTML = '';
+        if (featuredGrid) featuredGrid.innerHTML = '';
     }
 }
 
@@ -1076,8 +1101,13 @@ function enableShopifyIntegration(storeName, apiKey, saveCredentials = true) {
 // Function to disable Shopify integration
 function disableShopifyIntegration() {
     SHOPIFY_CONFIG.enabled = false;
-    console.log('📦 Shopify integration disabled. Using sample data.');
-    initializeProducts();
+    console.log('📦 Shopify integration disabled.');
+    products = [];
+    // Clear product grids
+    const collectionGrid = document.querySelector('.collection-section .product-grid');
+    const featuredGrid = document.querySelector('.featured-section .product-grid');
+    if (collectionGrid) collectionGrid.innerHTML = '';
+    if (featuredGrid) featuredGrid.innerHTML = '';
 }
 
 // Initialize cart display
@@ -1097,9 +1127,13 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('🔄 Auto-connecting to Shopify with saved credentials...');
             enableShopifyIntegration(savedCredentials.store, savedCredentials.apiKey, false); // Don't save again
         } else {
-            // No credentials, use sample data
-            console.log('📦 No Shopify credentials found. Using sample data.');
-            initializeProducts();
+            // No credentials, show empty product sections
+            console.log('📦 No Shopify credentials found. Product sections will be empty.');
+            products = [];
+            const collectionGrid = document.querySelector('.collection-section .product-grid');
+            const featuredGrid = document.querySelector('.featured-section .product-grid');
+            if (collectionGrid) collectionGrid.innerHTML = '';
+            if (featuredGrid) featuredGrid.innerHTML = '';
         }
     }
 });

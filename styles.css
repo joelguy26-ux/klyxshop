@@ -321,8 +321,20 @@ body {
   margin-top: 8px;
 }
 
+/* Hide duplicate product elements that Shopify might create */
+.shopify-buy-button .shopify-buy__product,
+.shopify-buy-button .shopify-buy__product__wrapper,
+.shopify-buy-button .shopify-buy__product__title,
+.shopify-buy-button .shopify-buy__product__price,
+.shopify-buy-button .shopify-buy__product__img-wrapper,
+.shopify-buy-button .shopify-buy__product__img {
+  display: none !important;
+}
+
+/* Only show the button */
+.shopify-buy-button .shopify-buy__btn,
 .shopify-buy-button button {
-  width: 100%;
+  width: 100% !important;
   background: #000000 !important;
   color: white !important;
   border: none !important;
@@ -333,13 +345,16 @@ body {
   text-transform: uppercase !important;
   cursor: pointer !important;
   transition: all 0.3s ease !important;
+  display: block !important;
 }
 
+.shopify-buy-button .shopify-buy__btn:hover,
 .shopify-buy-button button:hover {
   background: rgba(0, 0, 0, 0.9) !important;
   transform: translateY(-1px) !important;
 }
 
+.shopify-buy-button .shopify-buy__btn:focus,
 .shopify-buy-button button:focus {
   background: #000000 !important;
   outline: none !important;
