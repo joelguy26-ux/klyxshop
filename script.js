@@ -406,12 +406,9 @@ function renderProducts(containerSelector, productFilter = null) {
         productsToRender = products.filter(product => product.collection === productFilter);
     }
 
+    // Keep empty spaces blank - don't show any message
     if (productsToRender.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <p>No products available</p>
-            </div>
-        `;
+        container.innerHTML = '';
         return;
     }
 
@@ -492,12 +489,9 @@ function renderProductsByCollections() {
 function renderCollectionProducts(container, productsToRender, collectionName) {
     if (!container) return;
 
+    // Keep empty spaces blank - don't show any message
     if (productsToRender.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <p>No products in ${collectionName}</p>
-            </div>
-        `;
+        container.innerHTML = '';
         return;
     }
 
@@ -512,38 +506,63 @@ function renderCollectionProducts(container, productsToRender, collectionName) {
         </div>
     `).join('');
 
-    // Re-attach event listeners
-    attachProductCardListeners(container);
+    // Re-attach event listeners - pass the container element directly
+    attachProductCardListenersToContainer(container);
 }
 
-// Function to attach event listeners to product cards
+// Function to attach event listeners to product cards (accepts selector string)
 function attachProductCardListeners(containerSelector) {
     const container = document.querySelector(containerSelector);
     if (!container) return;
+    attachProductCardListenersToContainer(container);
+}
+
+// Function to attach event listeners to product cards (accepts container element)
+function attachProductCardListenersToContainer(container) {
+    if (!container) return;
 
     container.querySelectorAll('.product-card').forEach(card => {
-        card.addEventListener('click', function(e) {
+        // Remove any existing event listeners by cloning
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        
+        // Add click handler
+        newCard.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
+            
             const productId = this.getAttribute('data-product-id');
+            if (!productId) {
+                console.error('No product ID found on card');
+                return;
+            }
+            
             const product = products.find(p => p.id === productId);
             
-            if (product && !product.soldOut) {
-                addToCart(product.id, product.name, product.price);
-            } else if (product && product.soldOut) {
-                alert('This product is currently sold out.');
+            if (!product) {
+                console.error('Product not found:', productId);
+                return;
             }
+            
+            if (product.soldOut) {
+                alert('This product is currently sold out.');
+                return;
+            }
+            
+            // Add to cart
+            addToCart(product.id, product.name, product.price);
         });
         
         // Add cursor pointer
-        card.style.cursor = 'pointer';
+        newCard.style.cursor = 'pointer';
         
         // Add hover effects
-        card.addEventListener('mouseenter', function() {
+        newCard.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-5px)';
             this.style.transition = 'transform 0.3s ease';
         });
         
-        card.addEventListener('mouseleave', function() {
+        newCard.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0)';
         });
     });
