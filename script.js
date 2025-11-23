@@ -1,10 +1,22 @@
 // Declare and initialize the SHOPIFY_CONFIG object
+// OPTION 1: Hardcode your credentials here for permanent connection (recommended for production)
+let SHOPIFY_CONFIG = {
+    store: 'cbpgj6-gb',
+    apiKey: '202eb1236910457febb7ee281668f083',
+    apiVersion: '2023-10',
+    enabled: true
+};
+
+// OPTION 2: Use localStorage (auto-saves when you connect via console) - DISABLED
+// Uncomment below and comment out Option 1 if you want to use localStorage instead
+/*
 let SHOPIFY_CONFIG = {
     store: '',
     apiKey: '',
     apiVersion: '2023-10',
     enabled: false
 };
+*/
 
 // Shopify Buy Button client
 let shopifyBuyClient = null;
@@ -1002,11 +1014,57 @@ function createShopifyBuyClient() {
     }
 }
 
+// Save Shopify credentials to localStorage
+function saveShopifyCredentials(storeName, apiKey) {
+    try {
+        localStorage.setItem('shopify_store', storeName);
+        localStorage.setItem('shopify_api_key', apiKey);
+        localStorage.setItem('shopify_enabled', 'true');
+        console.log('✅ Shopify credentials saved');
+    } catch (error) {
+        console.error('❌ Error saving credentials:', error);
+    }
+}
+
+// Load Shopify credentials from localStorage
+function loadShopifyCredentials() {
+    try {
+        const store = localStorage.getItem('shopify_store');
+        const apiKey = localStorage.getItem('shopify_api_key');
+        const enabled = localStorage.getItem('shopify_enabled') === 'true';
+        
+        if (store && apiKey && enabled) {
+            return { store, apiKey, enabled };
+        }
+        return null;
+    } catch (error) {
+        console.error('❌ Error loading credentials:', error);
+        return null;
+    }
+}
+
+// Clear saved Shopify credentials
+function clearShopifyCredentials() {
+    try {
+        localStorage.removeItem('shopify_store');
+        localStorage.removeItem('shopify_api_key');
+        localStorage.removeItem('shopify_enabled');
+        console.log('✅ Shopify credentials cleared');
+    } catch (error) {
+        console.error('❌ Error clearing credentials:', error);
+    }
+}
+
 // Function to enable Shopify integration
-function enableShopifyIntegration(storeName, apiKey) {
+function enableShopifyIntegration(storeName, apiKey, saveCredentials = true) {
     SHOPIFY_CONFIG.store = storeName;
     SHOPIFY_CONFIG.apiKey = apiKey;
     SHOPIFY_CONFIG.enabled = true;
+
+    // Save credentials to localStorage for persistence
+    if (saveCredentials) {
+        saveShopifyCredentials(storeName, apiKey);
+    }
 
     console.log('🔄 Shopify integration enabled. Reloading products...');
     initializeProducts();
@@ -1025,7 +1083,25 @@ function disableShopifyIntegration() {
 // Initialize cart display
 document.addEventListener('DOMContentLoaded', function() {
     updateCartDisplay();
-    initializeProducts();
+    
+    // Check if credentials are hardcoded (Option 1)
+    if (SHOPIFY_CONFIG.enabled && SHOPIFY_CONFIG.store && SHOPIFY_CONFIG.apiKey) {
+        console.log('🔄 Auto-connecting to Shopify with hardcoded credentials...');
+        initializeProducts();
+        initializeShopifyBuyButton();
+    }
+    // Check for saved credentials in localStorage (Option 2)
+    else {
+        const savedCredentials = loadShopifyCredentials();
+        if (savedCredentials) {
+            console.log('🔄 Auto-connecting to Shopify with saved credentials...');
+            enableShopifyIntegration(savedCredentials.store, savedCredentials.apiKey, false); // Don't save again
+        } else {
+            // No credentials, use sample data
+            console.log('📦 No Shopify credentials found. Using sample data.');
+            initializeProducts();
+        }
+    }
 });
 
 // Add hover effects to product cards
