@@ -423,11 +423,97 @@ function renderProducts(containerSelector, productFilter = null) {
             </div>
             <h3 class="product-name">${product.name}</h3>
             <p class="product-price">$${product.price.toFixed(2)}</p>
+            ${product.collectionName ? `<p class="product-collection">${product.collectionName}</p>` : ''}
         </div>
     `).join('');
 
     // Re-attach event listeners to new product cards
     attachProductCardListeners(containerSelector);
+}
+
+// Function to render products organized by collections
+function renderProductsByCollections() {
+    // Group products by collection
+    const productsByCollection = {};
+    
+    products.forEach(product => {
+        const collectionName = product.collectionName || 'Other';
+        if (!productsByCollection[collectionName]) {
+            productsByCollection[collectionName] = [];
+        }
+        productsByCollection[collectionName].push(product);
+    });
+
+    // Render first collection in the main section
+    const firstCollection = Object.keys(productsByCollection)[0];
+    if (firstCollection) {
+        const collectionSection = document.querySelector('.collection-section');
+        if (collectionSection) {
+            const title = collectionSection.querySelector('.section-title');
+            if (title) {
+                title.textContent = firstCollection.toUpperCase();
+            }
+        }
+        
+        const mainGrid = document.querySelector('.collection-section .product-grid');
+        if (mainGrid) {
+            renderCollectionProducts(mainGrid, productsByCollection[firstCollection], firstCollection);
+        }
+    }
+
+    // Render featured products
+    const featuredProducts = products.filter(p => p.collection === 'featured' || p.tags?.includes('featured'));
+    if (featuredProducts.length > 0) {
+        const featuredGrid = document.querySelector('.featured-section .product-grid');
+        if (featuredGrid) {
+            const featuredTitle = document.querySelector('.featured-section .section-title');
+            if (featuredTitle) {
+                featuredTitle.textContent = 'FEATURED PRODUCTS';
+            }
+            renderCollectionProducts(featuredGrid, featuredProducts, 'Featured');
+        }
+    } else {
+        // If no featured products, show second collection
+        const secondCollection = Object.keys(productsByCollection)[1];
+        if (secondCollection) {
+            const featuredGrid = document.querySelector('.featured-section .product-grid');
+            if (featuredGrid) {
+                const featuredTitle = document.querySelector('.featured-section .section-title');
+                if (featuredTitle) {
+                    featuredTitle.textContent = secondCollection.toUpperCase();
+                }
+                renderCollectionProducts(featuredGrid, productsByCollection[secondCollection], secondCollection);
+            }
+        }
+    }
+}
+
+// Function to render products for a specific collection
+function renderCollectionProducts(container, productsToRender, collectionName) {
+    if (!container) return;
+
+    if (productsToRender.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <p>No products in ${collectionName}</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = productsToRender.map(product => `
+        <div class="product-card" data-product-id="${product.id}">
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}" />
+                ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
+            </div>
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-price">$${product.price.toFixed(2)}</p>
+        </div>
+    `).join('');
+
+    // Re-attach event listeners
+    attachProductCardListeners(container);
 }
 
 // Function to attach event listeners to product cards
@@ -481,9 +567,14 @@ function importProducts(productData) {
         // Replace products array
         products = productData;
         
-        // Re-render all product sections
-        renderProducts('.collection-section .product-grid', 'myrtle');
-        renderProducts('.featured-section .product-grid', 'featured');
+        // Re-render products organized by collections
+        if (products.length > 0 && products.some(p => p.collectionName)) {
+            renderProductsByCollections();
+        } else {
+            // Fallback to old method if no collection names
+            renderProducts('.collection-section .product-grid', 'myrtle');
+            renderProducts('.featured-section .product-grid', 'featured');
+        }
         
         console.log(`Successfully imported ${productData.length} products!`);
         return true;
@@ -755,9 +846,14 @@ async function initializeProducts() {
     // Load collections
     await fetchCollectionsFromShopify();
     
-    // Render products
-    renderProducts('.collection-section .product-grid', 'myrtle');
-    renderProducts('.featured-section .product-grid', 'featured');
+    // Render products organized by collections
+    if (products.length > 0 && products.some(p => p.collectionName)) {
+        renderProductsByCollections();
+    } else {
+        // Fallback to old method if no collection names
+        renderProducts('.collection-section .product-grid', 'myrtle');
+        renderProducts('.featured-section .product-grid', 'featured');
+    }
 }
 
 // Function to enable Shopify integration
