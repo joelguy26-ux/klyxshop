@@ -6,6 +6,10 @@ let SHOPIFY_CONFIG = {
     enabled: false
 };
 
+// Shopify Buy Button client
+let shopifyBuyClient = null;
+let shopifyBuyUI = null;
+
 // Mobile Navigation Toggle
 const mobileMenu = document.getElementById('mobile-menu');
 const navMenu = document.querySelector('.nav-center');
@@ -412,8 +416,8 @@ function renderProducts(containerSelector, productFilter = null) {
         return;
     }
 
-    container.innerHTML = productsToRender.map(product => `
-        <div class="product-card" data-product-id="${product.id}">
+    container.innerHTML = productsToRender.map((product, index) => `
+        <div class="product-card" data-product-id="${product.id}" data-product-handle="${product.handle || ''}">
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}" />
                 ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
@@ -421,11 +425,17 @@ function renderProducts(containerSelector, productFilter = null) {
             <h3 class="product-name">${product.name}</h3>
             <p class="product-price">$${product.price.toFixed(2)}</p>
             ${product.collectionName ? `<p class="product-collection">${product.collectionName}</p>` : ''}
+            ${product.handle ? `<div class="shopify-buy-button" id="buy-button-${product.id}-${index}" data-product-handle="${product.handle}"></div>` : ''}
         </div>
     `).join('');
 
     // Re-attach event listeners to new product cards
     attachProductCardListeners(containerSelector);
+    
+    // Create Shopify Buy Buttons if available
+    if (shopifyBuyUI) {
+        setTimeout(() => createBuyButtonsForProducts(), 100);
+    }
 }
 
 // Function to render products organized by collections
@@ -495,19 +505,25 @@ function renderCollectionProducts(container, productsToRender, collectionName) {
         return;
     }
 
-    container.innerHTML = productsToRender.map(product => `
-        <div class="product-card" data-product-id="${product.id}">
+    container.innerHTML = productsToRender.map((product, index) => `
+        <div class="product-card" data-product-id="${product.id}" data-product-handle="${product.handle || ''}">
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}" />
                 ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
             </div>
             <h3 class="product-name">${product.name}</h3>
             <p class="product-price">$${product.price.toFixed(2)}</p>
+            ${product.handle ? `<div class="shopify-buy-button" id="buy-button-${product.id}-${index}" data-product-handle="${product.handle}"></div>` : ''}
         </div>
     `).join('');
 
     // Re-attach event listeners - pass the container element directly
     attachProductCardListenersToContainer(container);
+    
+    // Create Shopify Buy Buttons if available
+    if (shopifyBuyUI) {
+        setTimeout(() => createBuyButtonsForProducts(), 100);
+    }
 }
 
 // Function to attach event listeners to product cards (accepts selector string)
@@ -517,9 +533,82 @@ function attachProductCardListeners(containerSelector) {
     attachProductCardListenersToContainer(container);
 }
 
+// Function to create Shopify Buy Buttons for products
+function createBuyButtonsForProducts() {
+    if (!shopifyBuyUI) {
+        console.log('⏳ Shopify Buy UI not ready yet');
+        return;
+    }
+
+    document.querySelectorAll('.shopify-buy-button').forEach((buttonContainer, index) => {
+        const productHandle = buttonContainer.getAttribute('data-product-handle');
+        if (!productHandle) {
+            console.log('⚠️ No product handle found for buy button');
+            return;
+        }
+
+        try {
+            shopifyBuyUI.createComponent('product', {
+                handle: productHandle,
+                node: buttonContainer,
+                moneyFormat: '${{amount}}',
+                options: {
+                    product: {
+                        styles: {
+                            button: {
+                                'background-color': '#000000',
+                                ':hover': {
+                                    'background-color': '#000000'
+                                },
+                                ':focus': {
+                                    'background-color': '#000000'
+                                }
+                            }
+                        },
+                        text: {
+                            button: 'Add to cart'
+                        }
+                    },
+                    cart: {
+                        styles: {
+                            button: {
+                                'background-color': '#000000',
+                                ':hover': {
+                                    'background-color': '#000000'
+                                }
+                            }
+                        },
+                        text: {
+                            button: 'Checkout'
+                        }
+                    },
+                    toggle: {
+                        styles: {
+                            toggle: {
+                                'background-color': '#000000',
+                                ':hover': {
+                                    'background-color': '#000000'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        } catch (error) {
+            console.error('Error creating buy button for', productHandle, error);
+        }
+    });
+}
+
 // Function to attach event listeners to product cards (accepts container element)
 function attachProductCardListenersToContainer(container) {
     if (!container) return;
+
+    // Don't add click handlers if Shopify Buy Button is enabled
+    // The buy buttons will handle the cart functionality
+    if (shopifyBuyUI) {
+        return;
+    }
 
     container.querySelectorAll('.product-card').forEach(card => {
         // Remove any existing event listeners by cloning
@@ -875,6 +964,44 @@ async function initializeProducts() {
     }
 }
 
+// Initialize Shopify Buy Button
+function initializeShopifyBuyButton() {
+    if (!window.ShopifyBuy) {
+        console.log('⏳ Waiting for Shopify Buy Button SDK to load...');
+        setTimeout(initializeShopifyBuyButton, 100);
+        return;
+    }
+
+    if (window.ShopifyBuy.UI) {
+        createShopifyBuyClient();
+    } else {
+        window.ShopifyBuy.onReady = createShopifyBuyClient;
+    }
+}
+
+function createShopifyBuyClient() {
+    if (!SHOPIFY_CONFIG.store || !SHOPIFY_CONFIG.apiKey) {
+        console.log('⚠️ Shopify credentials not set');
+        return;
+    }
+
+    try {
+        shopifyBuyClient = ShopifyBuy.buildClient({
+            domain: `${SHOPIFY_CONFIG.store}.myshopify.com`,
+            storefrontAccessToken: SHOPIFY_CONFIG.apiKey
+        });
+
+        ShopifyBuy.UI.onReady(shopifyBuyClient).then(function(ui) {
+            shopifyBuyUI = ui;
+            console.log('✅ Shopify Buy Button initialized');
+            // Create buy buttons for existing products
+            createBuyButtonsForProducts();
+        });
+    } catch (error) {
+        console.error('❌ Error initializing Shopify Buy Button:', error);
+    }
+}
+
 // Function to enable Shopify integration
 function enableShopifyIntegration(storeName, apiKey) {
     SHOPIFY_CONFIG.store = storeName;
@@ -883,6 +1010,9 @@ function enableShopifyIntegration(storeName, apiKey) {
 
     console.log('🔄 Shopify integration enabled. Reloading products...');
     initializeProducts();
+    
+    // Initialize Buy Button
+    initializeShopifyBuyButton();
 }
 
 // Function to disable Shopify integration
