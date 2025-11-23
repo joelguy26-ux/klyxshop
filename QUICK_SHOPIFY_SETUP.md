@@ -132,3 +132,6 @@ Once connected, your KLYXSHOP will:
 - ✅ **Work on all devices** (mobile, tablet, desktop)
 
 **Your products will now load automatically from Shopify!** 🎉
+
+
+

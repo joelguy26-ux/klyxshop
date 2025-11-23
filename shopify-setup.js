@@ -52,3 +52,6 @@ if (YOUR_SHOPIFY_STORE !== 'your-store-name' && YOUR_API_TOKEN !== 'your-api-tok
     console.log('🚀 Auto-connecting to Shopify...');
     connectToShopify();
 }
+
+
+

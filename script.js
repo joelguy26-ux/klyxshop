@@ -653,11 +653,31 @@ async function fetchCollectionsFromShopify() {
     if (!SHOPIFY_CONFIG.enabled) return false;
 
     try {
-        const response = await fetch(`https://${SHOPIFY_CONFIG.store}.myshopify.com/admin/api/${SHOPIFY_CONFIG.apiVersion}/collections.json`, {
-            headers: {
-                'X-Shopify-Access-Token': SHOPIFY_CONFIG.apiKey,
-                'Content-Type': 'application/json'
+        // Use Storefront API for collections to avoid CORS issues
+        const query = `
+            query {
+                collections(first: 20) {
+                    edges {
+                        node {
+                            id
+                            title
+                            handle
+                            image {
+                                url
+                            }
+                        }
+                    }
+                }
             }
+        `;
+
+        const response = await fetch(`https://${SHOPIFY_CONFIG.store}.myshopify.com/api/2023-10/graphql.json`, {
+            method: 'POST',
+            headers: {
+                'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.apiKey,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query })
         });
 
         if (!response.ok) {
@@ -665,11 +685,11 @@ async function fetchCollectionsFromShopify() {
         }
 
         const data = await response.json();
-        collections = data.collections.map(collection => ({
-            id: collection.id,
-            title: collection.title,
-            handle: collection.handle,
-            image: collection.image?.src || 'https://via.placeholder.com/400x300'
+        collections = data.data.collections.edges.map(edge => ({
+            id: edge.node.id.split('/').pop(),
+            title: edge.node.title,
+            handle: edge.node.handle,
+            image: edge.node.image?.url || 'https://via.placeholder.com/400x300'
         }));
 
         console.log(`✅ Successfully loaded ${collections.length} collections from Shopify!`);

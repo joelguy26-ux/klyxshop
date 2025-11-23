@@ -215,3 +215,4 @@ const SHOPIFY_CONFIG = {
 - [ ] Deploy to production
 
 **You're ready to go!** 🚀
+

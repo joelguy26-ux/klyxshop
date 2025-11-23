@@ -161,3 +161,6 @@ enableShopifyIntegration(storeName, apiToken);
 6. **Share with customers!**
 
 **Your KLYXSHOP will be live and ready for Shopify integration!** 🚀
+
+
+
