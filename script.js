@@ -97,157 +97,6 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// Shopping Cart Functionality
-let cart = [];
-let cartTotal = 0;
-
-// Add to cart function
-function addToCart(productId, productName, price) {
-    const existingItem = cart.find(item => item.id === productId);
-    
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            id: productId,
-            name: productName,
-            price: price,
-            quantity: 1
-        });
-    }
-    
-    updateCartDisplay();
-    showAddToCartAnimation();
-}
-
-// Remove from cart function
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCartDisplay();
-}
-
-// Update quantity function
-function updateQuantity(productId, change) {
-    const item = cart.find(item => item.id === productId);
-    if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
-            removeFromCart(productId);
-        } else {
-            updateCartDisplay();
-        }
-    }
-}
-
-// Update cart display
-function updateCartDisplay() {
-    const cartCount = document.getElementById('cart-count');
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    
-    // Update cart count
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    if (cartCount) {
-        cartCount.textContent = totalItems;
-    }
-    
-    // Update cart items display
-    if (cartItems) {
-        if (cart.length === 0) {
-            cartItems.innerHTML = `
-                <div class="empty-cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <p>Your cart is empty</p>
-                </div>
-            `;
-        } else {
-            cartItems.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <div class="cart-item-image">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                        <div class="cart-item-quantity">
-                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
-                            <span class="quantity">${item.quantity}</span>
-                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
-                        </div>
-                    </div>
-                    <button class="remove-item" onclick="removeFromCart('${item.id}')">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-    }
-    
-    // Update total
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    if (cartTotal) {
-        cartTotal.textContent = total.toFixed(2);
-    }
-}
-
-// Toggle cart modal
-function toggleCart() {
-    const cartModal = document.getElementById('cart-modal');
-    if (cartModal) {
-        cartModal.classList.toggle('active');
-    }
-}
-
-// Checkout function
-function checkout() {
-    if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-    }
-    
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    
-    alert(`Thank you for your purchase!\n\nItems: ${itemCount}\nTotal: $${total.toFixed(2)}\n\nThis would redirect to payment processing.`);
-    
-    // Clear cart after checkout
-    cart = [];
-    updateCartDisplay();
-    toggleCart();
-}
-
-// Add to cart animation
-function showAddToCartAnimation() {
-    const cartBtn = document.querySelector('.nav-icon');
-    if (cartBtn) {
-        cartBtn.style.transform = 'scale(1.2)';
-        cartBtn.style.color = '#dc2626';
-        
-        setTimeout(() => {
-            cartBtn.style.transform = 'scale(1)';
-            cartBtn.style.color = 'white';
-        }, 300);
-    }
-}
-
-// Close cart when clicking outside
-document.addEventListener('click', function(e) {
-    const cartModal = document.getElementById('cart-modal');
-    if (e.target === cartModal) {
-        cartModal.classList.remove('active');
-    }
-});
-
-// Close cart with escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const cartModal = document.getElementById('cart-modal');
-        if (cartModal) {
-            cartModal.classList.remove('active');
-        }
-    }
-});
-
 // Newsletter subscription
 function subscribeEmail() {
     const emailInput = document.querySelector('.newsletter-input');
@@ -270,25 +119,8 @@ function subscribeEmail() {
     }
 }
 
-// Add click handlers for product cards
-document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('click', function(e) {
-        e.preventDefault();
-        const productName = this.querySelector('.product-name').textContent;
-        const productPrice = this.querySelector('.product-price').textContent;
-        const price = parseFloat(productPrice.replace('$', ''));
-        
-        // Generate a unique ID for the product
-        const productId = 'product-' + Math.random().toString(36).substr(2, 9);
-        
-        addToCart(productId, productName, price);
-    });
-    
-    // Add cursor pointer
-    card.style.cursor = 'pointer';
-});
-
 // Hero cards are now non-interactive - only hover effects remain
+// Product cards use Shopify Buy Button for cart functionality
 
 // Newsletter form submission
 document.addEventListener('DOMContentLoaded', function() {
@@ -428,18 +260,30 @@ function renderProducts(containerSelector, productFilter = null) {
         return;
     }
 
-    container.innerHTML = productsToRender.map((product, index) => `
+    container.innerHTML = productsToRender.map((product, index) => {
+        const originalPrice = product.compareAtPrice || product.price * 1.5; // Use compareAtPrice or calculate 50% off
+        const isOnSale = originalPrice > product.price;
+        const image2 = product.images && product.images.length > 1 ? product.images[1] : product.image;
+        
+        return `
         <div class="product-card" data-product-id="${product.id}" data-product-handle="${product.handle || ''}">
+            ${isOnSale && !product.soldOut ? '<div class="sale-badge">Sale</div>' : ''}
+            ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}" />
-                ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
+                <img src="${image2}" alt="${product.name}" />
             </div>
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-price">$${product.price.toFixed(2)}</p>
-            ${product.collectionName ? `<p class="product-collection">${product.collectionName}</p>` : ''}
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <div class="product-price-container">
+                    ${isOnSale ? `<span class="product-price-original">$${originalPrice.toFixed(2)} USD</span>` : ''}
+                    <span class="product-price-usd">$${product.price.toFixed(2)} USD</span>
+                </div>
+            </div>
             ${product.handle ? `<div class="shopify-buy-button" id="buy-button-${product.id}-${index}" data-product-handle="${product.handle}"></div>` : ''}
         </div>
-    `).join('');
+    `;
+    }).join('');
 
     // Re-attach event listeners to new product cards
     attachProductCardListeners(containerSelector);
@@ -517,17 +361,30 @@ function renderCollectionProducts(container, productsToRender, collectionName) {
         return;
     }
 
-    container.innerHTML = productsToRender.map((product, index) => `
+    container.innerHTML = productsToRender.map((product, index) => {
+        const originalPrice = product.compareAtPrice || product.price * 1.5; // Use compareAtPrice or calculate 50% off
+        const isOnSale = originalPrice > product.price;
+        const image2 = product.images && product.images.length > 1 ? product.images[1] : product.image;
+        
+        return `
         <div class="product-card" data-product-id="${product.id}" data-product-handle="${product.handle || ''}">
+            ${isOnSale && !product.soldOut ? '<div class="sale-badge">Sale</div>' : ''}
+            ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}" />
-                ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
+                <img src="${image2}" alt="${product.name}" />
             </div>
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-price">$${product.price.toFixed(2)}</p>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <div class="product-price-container">
+                    ${isOnSale ? `<span class="product-price-original">$${originalPrice.toFixed(2)} USD</span>` : ''}
+                    <span class="product-price-usd">$${product.price.toFixed(2)} USD</span>
+                </div>
+            </div>
             ${product.handle ? `<div class="shopify-buy-button" id="buy-button-${product.id}-${index}" data-product-handle="${product.handle}"></div>` : ''}
         </div>
-    `).join('');
+    `;
+    }).join('');
 
     // Re-attach event listeners - pass the container element directly
     attachProductCardListenersToContainer(container);
@@ -669,8 +526,7 @@ function attachProductCardListenersToContainer(container) {
                 return;
             }
             
-            // Add to cart
-            addToCart(product.id, product.name, product.price);
+            // Product cards use Shopify Buy Button for cart functionality
         });
         
         // Add cursor pointer
@@ -814,7 +670,7 @@ async function fetchProductsFromShopify() {
                                         title
                                         handle
                                         description
-                                        images(first: 1) {
+                                        images(first: 2) {
                                             edges {
                                                 node {
                                                     url
@@ -825,6 +681,9 @@ async function fetchProductsFromShopify() {
                                             edges {
                                                 node {
                                                     price {
+                                                        amount
+                                                    }
+                                                    compareAtPrice {
                                                         amount
                                                     }
                                                     availableForSale
@@ -868,7 +727,9 @@ async function fetchProductsFromShopify() {
                     collection.products.edges.forEach(productEdge => {
                         const product = productEdge.node;
                         const variant = product.variants.edges[0]?.node;
-                        const image = product.images.edges[0]?.node;
+                        const images = product.images.edges || [];
+                        const primaryImage = images[0]?.node;
+                        const secondaryImage = images[1]?.node || primaryImage;
                         
                         // Determine collection assignment
                         let productCollection = 'myrtle';
@@ -882,7 +743,9 @@ async function fetchProductsFromShopify() {
                             id: product.id.split('/').pop(), // Extract ID from GraphQL ID
                             name: product.title.toUpperCase(),
                             price: parseFloat(variant?.price?.amount || 0),
-                            image: image?.url || 'https://via.placeholder.com/400x400',
+                            compareAtPrice: variant?.compareAtPrice?.amount ? parseFloat(variant.compareAtPrice.amount) : null,
+                            image: primaryImage?.url || 'https://via.placeholder.com/400x400',
+                            images: images.map(img => img.node.url),
                             soldOut: !variant?.availableForSale || false,
                             collection: productCollection,
                             description: product.description,
@@ -1110,10 +973,8 @@ function disableShopifyIntegration() {
     if (featuredGrid) featuredGrid.innerHTML = '';
 }
 
-// Initialize cart display
+// Initialize products
 document.addEventListener('DOMContentLoaded', function() {
-    updateCartDisplay();
-    
     // Check if credentials are hardcoded (Option 1)
     if (SHOPIFY_CONFIG.enabled && SHOPIFY_CONFIG.store && SHOPIFY_CONFIG.apiKey) {
         console.log('🔄 Auto-connecting to Shopify with hardcoded credentials...');

@@ -18,55 +18,42 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quantico:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script async src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <!-- Top bar with currency selector -->
-        <div class="top-bar">
-            <div class="container">
-                <button class="currency-selector">
-                    United States (USD $)
-                </button>
+    <!-- Promo Banner -->
+    <div class="promo-banner">
+        <div class="container">
+            <div class="promo-banner-content">
+                <span class="promo-text">50% OFF STORE WIDE!</span>
+                <button class="promo-shop-btn">Shop Now</button>
             </div>
         </div>
+    </div>
 
-        <!-- Main navigation -->
+    <!-- Header -->
+    <header class="header">
         <div class="container">
             <div class="nav-main">
-                <!-- Mobile Menu & Search -->
-                <div class="nav-left">
-                    <button class="mobile-menu-btn" id="mobile-menu">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <button class="search-btn">
-                        <i class="fas fa-search"></i>
-                    </button>
+                <!-- Left - Hamburger Menu -->
+                <button class="mobile-menu-btn" id="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <!-- Center - Logo -->
+                <div class="logo-center">
+                    <a href="#" class="logo-circle">
+                        <span class="logo-text">KLYX</span>
+                    </a>
                 </div>
 
-                <!-- Navigation -->
-                <nav class="nav-center">
-                    <a href="#" class="nav-link">HOME</a>
-
-                    <!-- Logo -->
-                    <a href="#" class="logo">
-                        <div class="logo-text">KLYXSHOP</div>
-                    </a>
-
-                    <a href="#" class="nav-link">SHOP</a>
-                </nav>
-
-                <!-- Logo for mobile -->
-                <a href="#" class="mobile-logo">
-                    <div class="logo-text">KLYXSHOP</div>
-                </a>
-
-                <!-- Icons -->
+                <!-- Right - Icons -->
                 <div class="nav-right">
+                    <button class="nav-icon search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
                     <button class="nav-icon">
                         <i class="fas fa-user"></i>
                     </button>
@@ -74,6 +61,21 @@
             </div>
         </div>
     </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <div class="nav-links">
+                <a href="#" class="nav-link">Shop</a>
+                <a href="#" class="nav-link">Reviews</a>
+                <a href="#" class="nav-link">Track Your Order</a>
+                <a href="#" class="nav-link">Follow</a>
+                <a href="#" class="nav-link">Refund Policy</a>
+                <a href="#" class="nav-link">Shipping Policy</a>
+                <a href="#" class="nav-link">Size Chart</a>
+            </div>
+        </div>
+    </nav>
 
     <!-- Hero Section - Three Column Feature -->
     <section class="hero-section">
@@ -97,20 +99,200 @@
     <!-- Collection Section -->
     <section class="collection-section">
         <div class="container">
-            <div class="product-grid">
-                <!-- Products will be loaded dynamically from Shopify -->
-            </div>
+            <div id='collection-component-1764460503802'></div>
         </div>
     </section>
 
-    <!-- Featured Products -->
-    <section class="featured-section">
-        <div class="container">
-            <div class="product-grid">
-                <!-- Products will be loaded dynamically from Shopify -->
-            </div>
-        </div>
-    </section>
+    <script type="text/javascript">
+    /*<![CDATA[*/
+    (function () {
+      var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+      if (window.ShopifyBuy) {
+        if (window.ShopifyBuy.UI) {
+          ShopifyBuyInit();
+        } else {
+          loadScript();
+        }
+      } else {
+        loadScript();
+      }
+      function loadScript() {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = scriptURL;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+        script.onload = ShopifyBuyInit;
+      }
+      function ShopifyBuyInit() {
+        var client = ShopifyBuy.buildClient({
+          domain: 'cbpgj6-gb.myshopify.com',
+          storefrontAccessToken: 'bb89bea9d3e5684ebed8809c17a36e29',
+        });
+        ShopifyBuy.UI.onReady(client).then(function (ui) {
+          ui.createComponent('collection', {
+            id: '309492514931',
+            node: document.getElementById('collection-component-1764460503802'),
+            moneyFormat: '%24%7B%7Bamount%7D%7D',
+            options: {
+      "product": {
+        "styles": {
+          "product": {
+            "@media (min-width: 601px)": {
+              "max-width": "calc(25% - 20px)",
+              "margin-left": "20px",
+              "margin-bottom": "50px",
+              "width": "calc(25% - 20px)"
+            },
+            "img": {
+              "height": "calc(100% - 15px)",
+              "position": "absolute",
+              "left": "0",
+              "right": "0",
+              "top": "0"
+            },
+            "imgWrapper": {
+              "padding-top": "calc(75% + 15px)",
+              "position": "relative",
+              "height": "0"
+            }
+          },
+          "button": {
+            "font-size": "18px",
+            "padding-top": "17px",
+            "padding-bottom": "17px",
+            "color": "#f71a1a",
+            ":hover": {
+              "color": "#f71a1a",
+              "background-color": "#000000"
+            },
+            "background-color": "#000000",
+            ":focus": {
+              "background-color": "#000000"
+            },
+            "border-radius": "22px",
+            "padding-left": "38px",
+            "padding-right": "38px"
+          },
+          "quantityInput": {
+            "font-size": "18px",
+            "padding-top": "17px",
+            "padding-bottom": "17px"
+          }
+        },
+        "buttonDestination": "modal",
+        "contents": {
+          "options": false
+        },
+        "text": {
+          "button": "View product"
+        }
+      },
+      "productSet": {
+        "styles": {
+          "products": {
+            "@media (min-width: 601px)": {
+              "margin-left": "-20px"
+            }
+          }
+        }
+      },
+      "modalProduct": {
+        "contents": {
+          "img": false,
+          "imgWithCarousel": true,
+          "button": false,
+          "buttonWithQuantity": true
+        },
+        "styles": {
+          "product": {
+            "@media (min-width: 601px)": {
+              "max-width": "100%",
+              "margin-left": "0px",
+              "margin-bottom": "0px"
+            }
+          },
+          "button": {
+            "font-size": "18px",
+            "padding-top": "17px",
+            "padding-bottom": "17px",
+            "color": "#f71a1a",
+            ":hover": {
+              "color": "#f71a1a",
+              "background-color": "#000000"
+            },
+            "background-color": "#000000",
+            ":focus": {
+              "background-color": "#000000"
+            },
+            "border-radius": "22px",
+            "padding-left": "38px",
+            "padding-right": "38px"
+          },
+          "quantityInput": {
+            "font-size": "18px",
+            "padding-top": "17px",
+            "padding-bottom": "17px"
+          }
+        },
+        "text": {
+          "button": "Add to cart"
+        }
+      },
+      "option": {},
+      "cart": {
+        "styles": {
+          "button": {
+            "font-size": "18px",
+            "padding-top": "17px",
+            "padding-bottom": "17px",
+            "color": "#f71a1a",
+            ":hover": {
+              "color": "#f71a1a",
+              "background-color": "#000000"
+            },
+            "background-color": "#000000",
+            ":focus": {
+              "background-color": "#000000"
+            },
+            "border-radius": "22px"
+          }
+        },
+        "text": {
+          "total": "Subtotal",
+          "button": "Checkout"
+        },
+        "popup": false
+      },
+      "toggle": {
+        "styles": {
+          "toggle": {
+            "background-color": "#000000",
+            ":hover": {
+              "background-color": "#000000"
+            },
+            ":focus": {
+              "background-color": "#000000"
+            }
+          },
+          "count": {
+            "font-size": "18px",
+            "color": "#f71a1a",
+            ":hover": {
+              "color": "#f71a1a"
+            }
+          },
+          "iconPath": {
+            "fill": "#f71a1a"
+          }
+        }
+      }
+    },
+          });
+        });
+      }
+    })();
+    /*]]>*/
+    </script>
 
     <!-- Newsletter Section -->
     <section class="newsletter-section">
@@ -130,43 +312,28 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4>SHOP</h4>
-                    <ul>
-                        <li><a href="#">Search</a></li>
-                    </ul>
+            <!-- Social Links -->
+            <div class="footer-social">
+                <a href="https://www.instagram.com/klyxshop/" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="https://www.tiktok.com/@klyxshop" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <svg class="social-icon" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Copyright and Links -->
+            <div class="footer-copyright">
+                <div class="footer-copyright-text">© 2025, KLYXSHOP</div>
+                <div class="footer-links">
+                    <a href="#">Refund policy</a>
+                    <a href="#">Privacy policy</a>
+                    <a href="#">Terms of service</a>
                 </div>
-                <div class="footer-section">
-                    <h4>HELP</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Refund Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Shipping Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-currency">
-                <button class="currency-selector">United States (USD $)</button>
-            </div>
-
-            <!-- Payment Icons -->
-            <div class="payment-icons">
-                <div class="payment-icon">AMEX</div>
-                <div class="payment-icon">APPLE PAY</div>
-                <div class="payment-icon">DINERS</div>
-                <div class="payment-icon">DISCOVER</div>
-                <div class="payment-icon">GOOGLE PAY</div>
-                <div class="payment-icon">MASTERCARD</div>
-                <div class="payment-icon">PAYPAL</div>
-                <div class="payment-icon">SHOP PAY</div>
-                <div class="payment-icon">VISA</div>
-            </div>
-
-            <div class="footer-brand">
-                <p>KLYXSHOP LOS ANGELES</p>
             </div>
         </div>
     </footer>
@@ -202,30 +369,6 @@
 
                 <button class="promo-no-thanks" onclick="closePromoModal()">
                     No Thanks
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Shopping Cart Modal -->
-    <div id="cart-modal" class="cart-modal">
-        <div class="cart-content">
-            <div class="cart-header">
-                <h3>Shopping Cart</h3>
-                <button class="close-cart" onclick="toggleCart()">&times;</button>
-            </div>
-            <div class="cart-items" id="cart-items">
-                <div class="empty-cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <p>Your cart is empty</p>
-                </div>
-            </div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <strong>Total: $<span id="cart-total">0.00</span></strong>
-                </div>
-                <button class="btn btn-primary checkout-btn" onclick="checkout()">
-                    <i class="fas fa-credit-card"></i> Checkout
                 </button>
             </div>
         </div>
