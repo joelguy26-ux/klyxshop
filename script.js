@@ -1,5 +1,45 @@
-// Declare and initialize the SHOPIFY_CONFIG object
-// OPTION 1: Hardcode your credentials here for permanent connection (recommended for production)
+// ============================================
+// AMAZON AFFILIATE PRODUCTS SYSTEM
+// ============================================
+// 
+// To add products, simply add objects to the amazonProducts array below.
+// Each product needs:
+//   - id: unique identifier
+//   - name: product name
+//   - price: product price (number)
+//   - originalPrice: original price if on sale (optional)
+//   - image: product image URL
+//   - image2: second image for hover effect (optional)
+//   - affiliateLink: your Amazon affiliate link
+//   - category: product category (optional, for filtering)
+//
+// Example affiliate link format:
+//   https://www.amazon.com/dp/PRODUCT_ID?tag=YOUR_AFFILIATE_TAG
+// ============================================
+
+// Amazon Affiliate Products Data
+// Add your products here - this is where you'll manage all your affiliate links
+const amazonProducts = [
+    // Your first Amazon affiliate product
+    {
+        id: 'product-1',
+        name: 'Heated Blanket',
+        price: 0,
+        image: 'images/Gemini_Generated_Image_lk9naalk9naalk9n.png',
+        image2: 'images/Gemini_Generated_Image_lk9naalk9naalk9n.png',
+        affiliateLink: 'https://amzn.to/4sKu8B6',
+        category: 'home'
+    }
+    // Add more products here by copying the object above and updating the details
+];
+
+// ============================================
+// SHOPIFY STOREFRONT INTEGRATION
+// ============================================
+// This system allows you to sell your own products via Shopify
+// while also displaying Amazon affiliate products above
+
+// Shopify Configuration
 let SHOPIFY_CONFIG = {
     store: 'cbpgj6-gb',
     apiKey: '202eb1236910457febb7ee281668f083',
@@ -7,20 +47,13 @@ let SHOPIFY_CONFIG = {
     enabled: true
 };
 
-// OPTION 2: Use localStorage (auto-saves when you connect via console) - DISABLED
-// Uncomment below and comment out Option 1 if you want to use localStorage instead
-/*
-let SHOPIFY_CONFIG = {
-    store: '',
-    apiKey: '',
-    apiVersion: '2023-10',
-    enabled: false
-};
-*/
-
 // Shopify Buy Button client
 let shopifyBuyClient = null;
 let shopifyBuyUI = null;
+
+// Product Management System
+let products = [];
+let collections = [];
 
 // Mobile Navigation Toggle
 const mobileMenu = document.getElementById('mobile-menu');
@@ -155,10 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-// Product Management System
-let products = [];
-let collections = [];
 
 // Sample product data structure
 const sampleProducts = [
@@ -834,33 +863,126 @@ async function fetchCollectionsFromShopify() {
     }
 }
 
-// Initialize with sample data or Shopify
-async function initializeProducts() {
-    // Try to load from Shopify first
+// ============================================
+// AMAZON PRODUCT RENDERING FUNCTIONS
+// ============================================
+
+// Render Amazon affiliate products
+function renderAmazonProducts() {
+    const productGrid = document.getElementById('amazon-products-grid');
+    if (!productGrid) {
+        console.error('⚠️ Product grid not found. Make sure id="amazon-products-grid" exists in HTML.');
+        return;
+    }
+
+    console.log(`🔄 Rendering ${amazonProducts.length} Amazon products...`);
+
+    if (amazonProducts.length === 0) {
+        productGrid.innerHTML = '';
+        console.log('📦 No Amazon products to display. Add products to the amazonProducts array in script.js');
+        return;
+    }
+
+    productGrid.innerHTML = amazonProducts.map((product) => {
+        const isOnSale = product.originalPrice && product.originalPrice > product.price;
+        const image2 = product.image2 || product.image;
+        const showPrice = product.price > 0;
+        
+        return `
+            <div class="product-card amazon-product-card" data-product-id="${product.id}">
+                ${isOnSale ? '<div class="sale-badge">Sale</div>' : ''}
+                <a href="${product.affiliateLink}" target="_blank" rel="nofollow sponsored" class="product-link">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" />
+                        <img src="${image2}" alt="${product.name}" />
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        ${showPrice ? `
+                        <div class="product-price-container">
+                            ${isOnSale ? `<span class="product-price-original">$${product.originalPrice.toFixed(2)} USD</span>` : ''}
+                            <span class="product-price-usd">$${product.price.toFixed(2)} USD</span>
+                        </div>
+                        ` : ''}
+                        <div class="amazon-badge">View on Amazon →</div>
+                    </div>
+                </a>
+            </div>
+        `;
+    }).join('');
+
+    console.log(`✅ Rendered ${amazonProducts.length} Amazon affiliate products`);
+}
+
+// Initialize Amazon products on page load
+function initializeAmazonProducts() {
+    renderAmazonProducts();
+}
+
+// Render Shopify products to the shopify section
+function renderShopifyProducts() {
+    const productGrid = document.getElementById('shopify-products-grid');
+    if (!productGrid) {
+        console.log('⚠️ Shopify product grid not found');
+        return;
+    }
+
+    if (products.length === 0) {
+        productGrid.innerHTML = '';
+        console.log('📦 No Shopify products to display.');
+        return;
+    }
+
+    productGrid.innerHTML = products.map((product, index) => {
+        const originalPrice = product.compareAtPrice || product.price * 1.5;
+        const isOnSale = originalPrice > product.price;
+        const image2 = product.images && product.images.length > 1 ? product.images[1] : product.image;
+        
+        return `
+            <div class="product-card shopify-product-card" data-product-id="${product.id}" data-product-handle="${product.handle || ''}">
+                ${isOnSale && !product.soldOut ? '<div class="sale-badge">Sale</div>' : ''}
+                ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}" />
+                    <img src="${image2}" alt="${product.name}" />
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <div class="product-price-container">
+                        ${isOnSale ? `<span class="product-price-original">$${originalPrice.toFixed(2)} USD</span>` : ''}
+                        <span class="product-price-usd">$${product.price.toFixed(2)} USD</span>
+                    </div>
+                </div>
+                ${product.handle ? `<div class="shopify-buy-button" id="buy-button-${product.id}-${index}" data-product-handle="${product.handle}"></div>` : ''}
+            </div>
+        `;
+    }).join('');
+
+    // Create Shopify Buy Buttons if available
+    if (shopifyBuyUI) {
+        setTimeout(() => createBuyButtonsForProducts(), 100);
+    }
+
+    console.log(`✅ Rendered ${products.length} Shopify products`);
+}
+
+// Initialize Shopify products
+async function initializeShopifyProducts() {
+    if (!SHOPIFY_CONFIG.enabled) {
+        console.log('📦 Shopify integration disabled.');
+        return;
+    }
+
+    // Try to load from Shopify
     const shopifyLoaded = await fetchProductsFromShopify();
     
-    if (!shopifyLoaded) {
-        // No Shopify products - keep products array empty
-        products = [];
-        console.log('⚠️ No Shopify products loaded. Product sections will be empty.');
-    }
-    
-    // Load collections
-    await fetchCollectionsFromShopify();
-    
-    // Render products organized by collections
-    if (products.length > 0 && products.some(p => p.collectionName)) {
-        renderProductsByCollections();
-    } else if (products.length > 0) {
-        // Fallback to old method if no collection names
-        renderProducts('.collection-section .product-grid', 'myrtle');
-        renderProducts('.featured-section .product-grid', 'featured');
+    if (shopifyLoaded && products.length > 0) {
+        renderShopifyProducts();
     } else {
-        // No products - clear all product grids
-        const collectionGrid = document.querySelector('.collection-section .product-grid');
-        const featuredGrid = document.querySelector('.featured-section .product-grid');
-        if (collectionGrid) collectionGrid.innerHTML = '';
-        if (featuredGrid) featuredGrid.innerHTML = '';
+        const productGrid = document.getElementById('shopify-products-grid');
+        if (productGrid) {
+            productGrid.innerHTML = '';
+        }
     }
 }
 
@@ -955,7 +1077,7 @@ function enableShopifyIntegration(storeName, apiKey, saveCredentials = true) {
     }
 
     console.log('🔄 Shopify integration enabled. Reloading products...');
-    initializeProducts();
+    initializeShopifyProducts();
     
     // Initialize Buy Button
     initializeShopifyBuyButton();
@@ -973,28 +1095,22 @@ function disableShopifyIntegration() {
     if (featuredGrid) featuredGrid.innerHTML = '';
 }
 
-// Initialize products
+// Initialize both Amazon and Shopify products on page load
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if credentials are hardcoded (Option 1)
+    // Initialize Amazon affiliate products (always show)
+    initializeAmazonProducts();
+    
+    // Initialize Shopify products (if enabled)
     if (SHOPIFY_CONFIG.enabled && SHOPIFY_CONFIG.store && SHOPIFY_CONFIG.apiKey) {
-        console.log('🔄 Auto-connecting to Shopify with hardcoded credentials...');
-        initializeProducts();
+        console.log('🔄 Auto-connecting to Shopify...');
+        initializeShopifyProducts();
         initializeShopifyBuyButton();
-    }
-    // Check for saved credentials in localStorage (Option 2)
-    else {
+    } else {
+        // Check for saved credentials in localStorage
         const savedCredentials = loadShopifyCredentials();
         if (savedCredentials) {
             console.log('🔄 Auto-connecting to Shopify with saved credentials...');
-            enableShopifyIntegration(savedCredentials.store, savedCredentials.apiKey, false); // Don't save again
-        } else {
-            // No credentials, show empty product sections
-            console.log('📦 No Shopify credentials found. Product sections will be empty.');
-            products = [];
-            const collectionGrid = document.querySelector('.collection-section .product-grid');
-            const featuredGrid = document.querySelector('.featured-section .product-grid');
-            if (collectionGrid) collectionGrid.innerHTML = '';
-            if (featuredGrid) featuredGrid.innerHTML = '';
+            enableShopifyIntegration(savedCredentials.store, savedCredentials.apiKey, false);
         }
     }
 });
