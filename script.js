@@ -33,11 +33,21 @@ const amazonProducts = [
     // Featured product
     {
         id: 'product-2',
-        name: 'Featured Product',
+        name: 'Steam Cleaner',
         price: 0,
         image: 'images/featured-product.png',
         image2: 'images/featured-product.png',
         affiliateLink: 'https://amzn.to/4qGOtpz',
+        category: 'featured'
+    },
+    // Snow Blower
+    {
+        id: 'product-3',
+        name: 'Snow Blower',
+        price: 0,
+        image: 'images/snow-blower.png',
+        image2: 'images/snow-blower.png',
+        affiliateLink: 'https://amzn.to/4romoTZ',
         category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
