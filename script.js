@@ -49,6 +49,16 @@ const amazonProducts = [
         image2: 'images/snow-blower.png',
         affiliateLink: 'https://amzn.to/4romoTZ',
         category: 'featured'
+    },
+    // Wheel Snow Pusher
+    {
+        id: 'product-4',
+        name: 'Wheel Snow Pusher',
+        price: 0,
+        image: 'images/wheel-snow-pusher.png',
+        image2: 'images/wheel-snow-pusher.png',
+        affiliateLink: 'https://amzn.to/3Z6SiZ4',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
