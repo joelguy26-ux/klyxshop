@@ -59,6 +59,16 @@ const amazonProducts = [
         image2: 'images/wheel-snow-pusher.png',
         affiliateLink: 'https://amzn.to/3Z6SiZ4',
         category: 'featured'
+    },
+    // Vegetable Chopper
+    {
+        id: 'product-5',
+        name: 'Vegetable Chopper',
+        price: 0,
+        image: 'images/vegetable-chopper.png',
+        image2: 'images/vegetable-chopper.png',
+        affiliateLink: 'https://amzn.to/4a8B4iQ',
+        category: 'home'
     }
     // Add more products here by copying the object above and updating the details
 ];
