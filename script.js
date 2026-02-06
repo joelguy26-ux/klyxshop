@@ -79,6 +79,16 @@ const amazonProducts = [
         image2: 'images/food-cutting-scissors.png',
         affiliateLink: 'https://amzn.to/4ceqERn',
         category: 'home'
+    },
+    // Dyson SuperSonic Dryer
+    {
+        id: 'product-7',
+        name: 'Dyson SuperSonic Dryer',
+        price: 0,
+        image: 'images/dyson-supersonic-dryer.png',
+        image2: 'images/dyson-supersonic-dryer.png',
+        affiliateLink: 'https://amzn.to/4knQzIr',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
@@ -105,25 +115,58 @@ let shopifyBuyUI = null;
 let products = [];
 let collections = [];
 
-// Mobile Navigation Toggle
+// Mobile Navigation Toggle - Dropdown Menu
 const mobileMenu = document.getElementById('mobile-menu');
-const navMenu = document.querySelector('.nav-center');
+const mobileDropdown = document.getElementById('mobile-dropdown');
 
-if (mobileMenu && navMenu) {
-    mobileMenu.addEventListener('click', () => {
+if (mobileMenu && mobileDropdown) {
+    const menuIcon = mobileMenu.querySelector('i');
+    
+    mobileMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = mobileDropdown.classList.toggle('active');
         mobileMenu.classList.toggle('active');
-        navMenu.classList.toggle('active');
+        
+        // Toggle between hamburger and X icon
+        if (isActive) {
+            menuIcon.classList.remove('fa-bars');
+            menuIcon.classList.add('fa-times');
+        } else {
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+        }
     });
 }
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
+// Close mobile dropdown when clicking on a link
+document.querySelectorAll('.dropdown-link').forEach(link => {
     link.addEventListener('click', () => {
-        if (mobileMenu && navMenu) {
+        if (mobileDropdown && mobileMenu) {
+            mobileDropdown.classList.remove('active');
             mobileMenu.classList.remove('active');
-            navMenu.classList.remove('active');
+            const menuIcon = mobileMenu.querySelector('i');
+            if (menuIcon) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
         }
     });
+});
+
+// Close mobile dropdown when clicking outside
+document.addEventListener('click', (e) => {
+    if (mobileDropdown && mobileMenu) {
+        const isClickInside = mobileMenu.contains(e.target) || mobileDropdown.contains(e.target);
+        if (!isClickInside && mobileDropdown.classList.contains('active')) {
+            mobileDropdown.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            const menuIcon = mobileMenu.querySelector('i');
+            if (menuIcon) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+    }
 });
 
 // Smooth scrolling for navigation links
@@ -723,6 +766,194 @@ function searchProducts(query) {
         product.id.toLowerCase().includes(searchTerm)
     );
 }
+
+// ============================================
+// SEARCH FUNCTIONALITY
+// ============================================
+
+// Search all products (Amazon + Shopify)
+function searchAllProducts(query) {
+    if (!query || query.trim() === '') {
+        return [];
+    }
+    
+    const searchTerm = query.toLowerCase().trim();
+    const results = [];
+    
+    // Search Amazon products
+    amazonProducts.forEach(product => {
+        const productName = product.name.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            // Calculate similarity score (simple: position of match)
+            const matchIndex = productName.indexOf(searchTerm);
+            const similarity = matchIndex === 0 ? 100 : 100 - matchIndex;
+            results.push({
+                ...product,
+                type: 'amazon',
+                similarity: similarity
+            });
+        }
+    });
+    
+    // Search Shopify products
+    products.forEach(product => {
+        const productName = product.name.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            const matchIndex = productName.indexOf(searchTerm);
+            const similarity = matchIndex === 0 ? 100 : 100 - matchIndex;
+            results.push({
+                ...product,
+                type: 'shopify',
+                similarity: similarity
+            });
+        }
+    });
+    
+    // Sort by similarity (most similar first)
+    return results.sort((a, b) => b.similarity - a.similarity);
+}
+
+// Display search results
+function displaySearchResults(query) {
+    const resultsContainer = document.getElementById('search-results');
+    if (!resultsContainer) return;
+    
+    const searchResults = searchAllProducts(query);
+    
+    if (query.trim() === '') {
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.remove('empty');
+        return;
+    }
+    
+    if (searchResults.length === 0) {
+        resultsContainer.innerHTML = '<div class="search-results empty">No products found</div>';
+        resultsContainer.classList.add('empty');
+        return;
+    }
+    
+    resultsContainer.classList.remove('empty');
+    resultsContainer.innerHTML = searchResults.map(product => {
+        const isAmazon = product.type === 'amazon';
+        const productLink = isAmazon ? product.affiliateLink : '#';
+        const productImage = product.image || 'https://via.placeholder.com/200x200';
+        const productPrice = product.price > 0 ? `$${product.price.toFixed(2)}` : '';
+        const productType = isAmazon ? 'Featured' : 'Our Store';
+        
+        return `
+            <a href="${productLink}" ${isAmazon ? 'target="_blank" rel="nofollow sponsored"' : ''} class="search-result-item">
+                <img src="${productImage}" alt="${product.name}" class="search-result-image" />
+                <div class="search-result-info">
+                    <div class="search-result-name">${product.name}</div>
+                    ${productPrice ? `<div class="search-result-price">${productPrice} USD</div>` : ''}
+                    <div class="search-result-type">${productType}</div>
+                </div>
+            </a>
+        `;
+    }).join('');
+}
+
+// Open search modal
+function openSearchModal() {
+    const searchModal = document.getElementById('search-modal');
+    const searchInput = document.getElementById('search-input');
+    
+    if (searchModal) {
+        searchModal.classList.add('active');
+        // Focus input after a short delay to ensure modal is visible
+        setTimeout(() => {
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }, 100);
+    }
+}
+
+// Close search modal
+function closeSearchModal() {
+    const searchModal = document.getElementById('search-modal');
+    const searchInput = document.getElementById('search-input');
+    
+    if (searchModal) {
+        searchModal.classList.remove('active');
+    }
+    
+    if (searchInput) {
+        searchInput.value = '';
+    }
+    
+    // Clear results
+    const resultsContainer = document.getElementById('search-results');
+    if (resultsContainer) {
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.remove('empty');
+    }
+}
+
+// Initialize search functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const searchBtn = document.querySelector('.search-btn');
+    const searchModal = document.getElementById('search-modal');
+    const searchCloseBtn = document.getElementById('search-close');
+    const searchInput = document.getElementById('search-input');
+    
+    // Open search modal when search button is clicked
+    if (searchBtn) {
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openSearchModal();
+        });
+    }
+    
+    // Close search modal when close button is clicked
+    if (searchCloseBtn) {
+        searchCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeSearchModal();
+        });
+    }
+    
+    // Close search modal when clicking outside
+    if (searchModal) {
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) {
+                closeSearchModal();
+            }
+        });
+    }
+    
+    // Close search modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchModal && searchModal.classList.contains('active')) {
+            closeSearchModal();
+        }
+    });
+    
+    // Search as user types
+    if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value;
+            
+            // Debounce search for better performance
+            searchTimeout = setTimeout(() => {
+                displaySearchResults(query);
+            }, 150);
+        });
+        
+        // Handle Enter key
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    displaySearchResults(query);
+                }
+            }
+        });
+    }
+});
 
 
 // Shopify API Integration - Fetch products from collections
