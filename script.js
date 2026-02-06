@@ -69,6 +69,16 @@ const amazonProducts = [
         image2: 'images/vegetable-chopper.png',
         affiliateLink: 'https://amzn.to/4a8B4iQ',
         category: 'home'
+    },
+    // Food Cutting Scissors
+    {
+        id: 'product-6',
+        name: 'Food Cutting Scissors',
+        price: 0,
+        image: 'images/food-cutting-scissors.png',
+        image2: 'images/food-cutting-scissors.png',
+        affiliateLink: 'https://amzn.to/4ceqERn',
+        category: 'home'
     }
     // Add more products here by copying the object above and updating the details
 ];
@@ -923,7 +933,8 @@ function renderAmazonProducts() {
         return;
     }
 
-    productGrid.innerHTML = amazonProducts.map((product) => {
+    // Latest-added first: render in reverse order so newest product is at the top
+    productGrid.innerHTML = [...amazonProducts].reverse().map((product) => {
         const isOnSale = product.originalPrice && product.originalPrice > product.price;
         const image2 = product.image2 || product.image;
         const showPrice = product.price > 0;
