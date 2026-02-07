@@ -99,6 +99,16 @@ const amazonProducts = [
         image2: 'images/polo-quarter-zip.png',
         affiliateLink: 'https://amzn.to/4top31G',
         category: 'featured'
+    },
+    // Tracking Tripod
+    {
+        id: 'product-9',
+        name: 'Tracking Tripod',
+        price: 0,
+        image: 'images/tracking-tripod.png',
+        image2: 'images/tracking-tripod.png',
+        affiliateLink: 'https://amzn.to/4tieVaB',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
