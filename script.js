@@ -89,6 +89,16 @@ const amazonProducts = [
         image2: 'images/dyson-supersonic-dryer.png',
         affiliateLink: 'https://amzn.to/4knQzIr',
         category: 'featured'
+    },
+    // Polo Quarter Zip
+    {
+        id: 'product-8',
+        name: 'Polo Quarter Zip',
+        price: 0,
+        image: 'images/polo-quarter-zip.png',
+        image2: 'images/polo-quarter-zip.png',
+        affiliateLink: 'https://amzn.to/4top31G',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
