@@ -109,6 +109,16 @@ const amazonProducts = [
         image2: 'images/tracking-tripod.png',
         affiliateLink: 'https://amzn.to/4tieVaB',
         category: 'featured'
+    },
+    // O2 Nose Filter
+    {
+        id: 'product-10',
+        name: 'O2 Nose Filter',
+        price: 0,
+        image: 'images/o2-nose-filter.png',
+        image2: 'images/o2-nose-filter.png',
+        affiliateLink: 'https://amzn.to/4akM3G4',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
