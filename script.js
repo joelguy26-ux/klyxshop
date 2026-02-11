@@ -119,6 +119,16 @@ const amazonProducts = [
         image2: 'images/o2-nose-filter.png',
         affiliateLink: 'https://amzn.to/4akM3G4',
         category: 'featured'
+    },
+    // Camera Grip Kit
+    {
+        id: 'product-11',
+        name: 'Camera Grip Kit',
+        price: 0,
+        image: 'images/camera-grip-kit.jpg',
+        image2: 'images/camera-grip-kit.jpg',
+        affiliateLink: 'https://amzn.to/3OataOL',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
