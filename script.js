@@ -139,6 +139,36 @@ const amazonProducts = [
         image2: 'images/polo-red.jpg',
         affiliateLink: 'https://amzn.to/4078nhL',
         category: 'featured'
+    },
+    // Polo Blue
+    {
+        id: 'product-13',
+        name: 'Polo Blue',
+        price: 0,
+        image: 'images/polo-blue.jpg',
+        image2: 'images/polo-blue.jpg',
+        affiliateLink: 'https://amzn.to/40acbij',
+        category: 'featured'
+    },
+    // Azzaro The Most Wanted
+    {
+        id: 'product-14',
+        name: 'Azzaro The Most Wanted',
+        price: 0,
+        image: 'images/azzaro-the-most-wanted.jpg',
+        image2: 'images/azzaro-the-most-wanted.jpg',
+        affiliateLink: 'https://amzn.to/4l2lQRs',
+        category: 'featured'
+    },
+    // Valentino Born In Roma
+    {
+        id: 'product-15',
+        name: 'Valentino Born In Roma',
+        price: 0,
+        image: 'images/valentino-born-in-roma.jpg',
+        image2: 'images/valentino-born-in-roma.jpg',
+        affiliateLink: 'https://amzn.to/3MSZaqq',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
