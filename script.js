@@ -129,6 +129,16 @@ const amazonProducts = [
         image2: 'images/camera-grip-kit.jpg',
         affiliateLink: 'https://amzn.to/3OataOL',
         category: 'featured'
+    },
+    // Polo Red
+    {
+        id: 'product-12',
+        name: 'Polo Red',
+        price: 0,
+        image: 'images/polo-red.jpg',
+        image2: 'images/polo-red.jpg',
+        affiliateLink: 'https://amzn.to/4078nhL',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
