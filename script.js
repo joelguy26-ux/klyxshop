@@ -33,11 +33,11 @@ const amazonProducts = [
     // Featured product
     {
         id: 'product-2',
-        name: 'Steam Cleaner',
+        name: 'Stronger With You Intensely',
         price: 0,
-        image: 'images/featured-product.png',
-        image2: 'images/featured-product.png',
-        affiliateLink: 'https://amzn.to/4qGOtpz',
+        image: 'images/stronger-with-you-intensely.jpg',
+        image2: 'images/stronger-with-you-intensely.jpg',
+        affiliateLink: 'https://amzn.to/4svp5DC',
         category: 'featured'
     },
     // Snow Blower
