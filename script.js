@@ -30,16 +30,6 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/4sKu8B6',
         category: 'home'
     },
-    // Featured product
-    {
-        id: 'product-2',
-        name: 'Stronger With You Intensely',
-        price: 0,
-        image: 'images/stronger-with-you-intensely.jpg',
-        image2: 'images/stronger-with-you-intensely.jpg',
-        affiliateLink: 'https://amzn.to/4svp5DC',
-        category: 'featured'
-    },
     // Snow Blower
     {
         id: 'product-3',
@@ -168,6 +158,16 @@ const amazonProducts = [
         image: 'images/valentino-born-in-roma.jpg',
         image2: 'images/valentino-born-in-roma.jpg',
         affiliateLink: 'https://amzn.to/3MSZaqq',
+        category: 'featured'
+    },
+    // Stronger With You Intensely - always shows at the very top (latest) because we reverse the array
+    {
+        id: 'product-2',
+        name: 'Stronger With You Intensely',
+        price: 0,
+        image: 'images/stronger-with-you-intensely.jpg',
+        image2: 'images/stronger-with-you-intensely.jpg',
+        affiliateLink: 'https://amzn.to/4svp5DC',
         category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
@@ -1244,7 +1244,7 @@ function renderAmazonProducts() {
         return;
     }
 
-    // Latest-added first: render in reverse order so newest product is at the top
+    // Latest-added first: render in reverse order so newest product (last in the array) is at the top
     productGrid.innerHTML = [...amazonProducts].reverse().map((product) => {
         const isOnSale = product.originalPrice && product.originalPrice > product.price;
         const image2 = product.image2 || product.image;
