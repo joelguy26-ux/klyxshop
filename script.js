@@ -169,6 +169,16 @@ const amazonProducts = [
         image2: 'images/stronger-with-you-intensely.jpg',
         affiliateLink: 'https://amzn.to/4svp5DC',
         category: 'featured'
+    },
+    // Bleu De Chanel Parfum - latest added (renders first)
+    {
+        id: 'product-16',
+        name: 'Bleu De Chanel Parfum',
+        price: 0,
+        image: 'images/bleu-de-chanel-parfum.jpg',
+        image2: 'images/bleu-de-chanel-parfum.jpg',
+        affiliateLink: 'https://amzn.to/4m53yQb',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
