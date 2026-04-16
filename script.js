@@ -170,7 +170,7 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/4svp5DC',
         category: 'featured'
     },
-    // Bleu De Chanel Parfum - latest added (renders first)
+    // Bleu De Chanel Parfum
     {
         id: 'product-16',
         name: 'Bleu De Chanel Parfum',
@@ -178,6 +178,16 @@ const amazonProducts = [
         image: 'images/bleu-de-chanel-parfum.jpg',
         image2: 'images/bleu-de-chanel-parfum.jpg',
         affiliateLink: 'https://amzn.to/4m53yQb',
+        category: 'featured'
+    },
+    // Sospiro Vibrato - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-17',
+        name: 'Sospiro Vibrato',
+        price: 0,
+        image: 'images/sospiro-vibrato.png',
+        image2: 'images/sospiro-vibrato.png',
+        affiliateLink: 'https://amzn.to/4vzbqOj',
         category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
