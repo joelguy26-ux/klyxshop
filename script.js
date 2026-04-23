@@ -189,6 +189,16 @@ const amazonProducts = [
         image2: 'images/sospiro-vibrato.png',
         affiliateLink: 'https://amzn.to/4vzbqOj',
         category: 'featured'
+    },
+    // YSL intense - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-18',
+        name: 'YSL intense',
+        price: 0,
+        image: 'images/ysl-intense.png',
+        image2: 'images/ysl-intense.png',
+        affiliateLink: 'https://amzn.to/4cvkGM0',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
@@ -1301,6 +1311,26 @@ function initializeAmazonProducts() {
     renderAmazonProducts();
 }
 
+// On Android, attempt to open Amazon app first, then fall back to the affiliate URL.
+function initializeAmazonAppDeepLinks() {
+    document.addEventListener('click', (event) => {
+        const amazonLink = event.target.closest('.amazon-product-card .product-link');
+        if (!amazonLink) return;
+
+        const affiliateUrl = amazonLink.getAttribute('href');
+        if (!affiliateUrl) return;
+
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        if (!isAndroid) return;
+
+        event.preventDefault();
+
+        const normalizedUrl = affiliateUrl.replace(/^https?:\/\//i, '');
+        const intentUrl = `intent://${normalizedUrl}#Intent;scheme=https;package=com.amazon.mShop.android.shopping;S.browser_fallback_url=${encodeURIComponent(affiliateUrl)};end`;
+        window.location.href = intentUrl;
+    });
+}
+
 // Render Shopify products to the shopify section
 function renderShopifyProducts() {
     const productGrid = document.getElementById('shopify-products-grid');
@@ -1481,6 +1511,7 @@ function disableShopifyIntegration() {
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize Amazon affiliate products (always show)
     initializeAmazonProducts();
+    initializeAmazonAppDeepLinks();
     
     // Initialize Shopify products (if enabled)
     if (SHOPIFY_CONFIG.enabled && SHOPIFY_CONFIG.store && SHOPIFY_CONFIG.apiKey) {
