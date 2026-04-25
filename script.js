@@ -160,16 +160,6 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/3MSZaqq',
         category: 'featured'
     },
-    // Stronger With You Intensely - always shows at the very top (latest) because we reverse the array
-    {
-        id: 'product-2',
-        name: 'Stronger With You Intensely',
-        price: 0,
-        image: 'images/stronger-with-you-intensely.jpg',
-        image2: 'images/stronger-with-you-intensely.jpg',
-        affiliateLink: 'https://amzn.to/4svp5DC',
-        category: 'featured'
-    },
     // Bleu De Chanel Parfum
     {
         id: 'product-16',
@@ -190,7 +180,7 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/4vzbqOj',
         category: 'featured'
     },
-    // YSL intense - latest (renders first; grid uses reversed order)
+    // YSL intense
     {
         id: 'product-18',
         name: 'YSL intense',
@@ -198,6 +188,36 @@ const amazonProducts = [
         image: 'images/ysl-intense.png',
         image2: 'images/ysl-intense.png',
         affiliateLink: 'https://amzn.to/4cvkGM0',
+        category: 'featured'
+    },
+    // Acqua di Giò Profondo
+    {
+        id: 'product-19',
+        name: 'Acqua di Giò Profondo',
+        price: 0,
+        image: 'images/acqua-di-gio-profondo.jpg',
+        image2: 'images/acqua-di-gio-profondo.jpg',
+        affiliateLink: 'https://amzn.to/3OXyiGG',
+        category: 'featured'
+    },
+    // Dolce&Gabbana Pour Homme
+    {
+        id: 'product-20',
+        name: 'Dolce&Gabbana Pour Homme',
+        price: 0,
+        image: 'images/dolce-gabbana-pour-homme.png',
+        image2: 'images/dolce-gabbana-pour-homme.png',
+        affiliateLink: 'https://amzn.to/4u5St45',
+        category: 'featured'
+    },
+    // Stronger With You Intensely - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-2',
+        name: 'Stronger With You Intensely',
+        price: 0,
+        image: 'images/stronger-with-you-intensely.jpg',
+        image2: 'images/stronger-with-you-intensely.jpg',
+        affiliateLink: 'https://amzn.to/48UK4Z7',
         category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
