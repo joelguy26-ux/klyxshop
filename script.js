@@ -219,6 +219,16 @@ const amazonProducts = [
         image2: 'images/stronger-with-you-intensely.jpg',
         affiliateLink: 'https://amzn.to/48UK4Z7',
         category: 'featured'
+    },
+    // Risvelium Orto Parisi - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-21',
+        name: 'Risvelium Orto Parisi',
+        price: 0,
+        image: 'images/risvelium-orto-parisi.png',
+        image2: 'images/risvelium-orto-parisi.png',
+        affiliateLink: 'https://amzn.to/49sN7YL',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
