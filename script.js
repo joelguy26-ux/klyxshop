@@ -229,6 +229,46 @@ const amazonProducts = [
         image2: 'images/risvelium-orto-parisi.png',
         affiliateLink: 'https://amzn.to/49sN7YL',
         category: 'featured'
+    },
+    // Hawas Ice - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-22',
+        name: 'Hawas Ice',
+        price: 0,
+        image: 'images/hawas-ice.png',
+        image2: 'images/hawas-ice.png',
+        affiliateLink: 'https://amzn.to/4uHYHYr',
+        category: 'featured'
+    },
+    // Platine Blanc - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-23',
+        name: 'Platine Blanc',
+        price: 0,
+        image: 'images/platine-blanc.png',
+        image2: 'images/platine-blanc.png',
+        affiliateLink: 'https://amzn.to/4tqZhsw',
+        category: 'featured'
+    },
+    // DXB EAU DE PARFUM - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-24',
+        name: 'DXB EAU DE PARFUM',
+        price: 0,
+        image: 'images/dxb-eau-de-parfum.png',
+        image2: 'images/dxb-eau-de-parfum.png',
+        affiliateLink: 'https://amzn.to/4tqJrxY',
+        category: 'featured'
+    },
+    // Armaf Infinity edp - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-25',
+        name: 'Armaf Infinity edp',
+        price: 0,
+        image: 'images/armaf-infinity-edp.png',
+        image2: 'images/armaf-infinity-edp.png',
+        affiliateLink: 'https://amzn.to/4dvNGDD',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
