@@ -170,26 +170,6 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/4m53yQb',
         category: 'featured'
     },
-    // Sospiro Vibrato - latest (renders first; grid uses reversed order)
-    {
-        id: 'product-17',
-        name: 'Sospiro Vibrato',
-        price: 0,
-        image: 'images/sospiro-vibrato.png',
-        image2: 'images/sospiro-vibrato.png',
-        affiliateLink: 'https://amzn.to/4vzbqOj',
-        category: 'featured'
-    },
-    // YSL intense
-    {
-        id: 'product-18',
-        name: 'YSL intense',
-        price: 0,
-        image: 'images/ysl-intense.png',
-        image2: 'images/ysl-intense.png',
-        affiliateLink: 'https://amzn.to/4cvkGM0',
-        category: 'featured'
-    },
     // Acqua di Giò Profondo
     {
         id: 'product-19',
@@ -200,16 +180,6 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/3OXyiGG',
         category: 'featured'
     },
-    // Dolce&Gabbana Pour Homme
-    {
-        id: 'product-20',
-        name: 'Dolce&Gabbana Pour Homme',
-        price: 0,
-        image: 'images/dolce-gabbana-pour-homme.png',
-        image2: 'images/dolce-gabbana-pour-homme.png',
-        affiliateLink: 'https://amzn.to/4u5St45',
-        category: 'featured'
-    },
     // Stronger With You Intensely - latest (renders first; grid uses reversed order)
     {
         id: 'product-2',
@@ -218,16 +188,6 @@ const amazonProducts = [
         image: 'images/stronger-with-you-intensely.jpg',
         image2: 'images/stronger-with-you-intensely.jpg',
         affiliateLink: 'https://amzn.to/48UK4Z7',
-        category: 'featured'
-    },
-    // Risvelium Orto Parisi - latest (renders first; grid uses reversed order)
-    {
-        id: 'product-21',
-        name: 'Risvelium Orto Parisi',
-        price: 0,
-        image: 'images/risvelium-orto-parisi.png',
-        image2: 'images/risvelium-orto-parisi.png',
-        affiliateLink: 'https://amzn.to/49sN7YL',
         category: 'featured'
     },
     // Hawas Ice - latest (renders first; grid uses reversed order)
@@ -260,6 +220,46 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/4tqJrxY',
         category: 'featured'
     },
+    // Sospiro Vibrato - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-17',
+        name: 'Sospiro Vibrato',
+        price: 0,
+        image: 'images/sospiro-vibrato.png',
+        image2: 'images/sospiro-vibrato.png',
+        affiliateLink: 'https://amzn.to/3RD2W9l',
+        category: 'featured'
+    },
+    // Dolce&Gabbana Pour Homme - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-20',
+        name: 'Dolce&Gabbana Pour Homme',
+        price: 0,
+        image: 'images/dolce-gabbana-pour-homme.png',
+        image2: 'images/dolce-gabbana-pour-homme.png',
+        affiliateLink: 'https://amzn.to/3RD2W9l',
+        category: 'featured'
+    },
+    // YSL intense - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-18',
+        name: 'YSL intense',
+        price: 0,
+        image: 'images/ysl-intense.png',
+        image2: 'images/ysl-intense.png',
+        affiliateLink: 'https://amzn.to/3PRTY7F',
+        category: 'featured'
+    },
+    // Risvelium Orto Parisi - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-21',
+        name: 'Risvelium Orto Parisi',
+        price: 0,
+        image: 'images/risvelium-orto-parisi.png',
+        image2: 'images/risvelium-orto-parisi.png',
+        affiliateLink: 'https://amzn.to/3PRTY7F',
+        category: 'featured'
+    },
     // Armaf Infinity edp - latest (renders first; grid uses reversed order)
     {
         id: 'product-25',
@@ -267,7 +267,7 @@ const amazonProducts = [
         price: 0,
         image: 'images/armaf-infinity-edp.png',
         image2: 'images/armaf-infinity-edp.png',
-        affiliateLink: 'https://amzn.to/4dvNGDD',
+        affiliateLink: 'https://amzn.to/4v838vy',
         category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
