@@ -269,6 +269,56 @@ const amazonProducts = [
         image2: 'images/armaf-infinity-edp.png',
         affiliateLink: 'https://amzn.to/4v838vy',
         category: 'featured'
+    },
+    // Khadlaj Island Vanilla Dunes - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-26',
+        name: 'Khadlaj Island Vanilla Dunes',
+        price: 0,
+        image: 'images/khadlaj-island-vanilla-dunes.png',
+        image2: 'images/khadlaj-island-vanilla-dunes.png',
+        affiliateLink: 'https://amzn.to/4vtENRb',
+        category: 'featured'
+    },
+    // Rayhaan Elixir EDP - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-27',
+        name: 'Rayhaan Elixir EDP',
+        price: 0,
+        image: 'images/rayhaan-elixir-edp.jpg',
+        image2: 'images/rayhaan-elixir-edp.jpg',
+        affiliateLink: 'https://amzn.to/4x5Ioq6',
+        category: 'featured'
+    },
+    // Rayhaan Lion EDP - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-28',
+        name: 'Rayhaan Lion EDP',
+        price: 0,
+        image: 'images/rayhaan-lion-edp.jpg',
+        image2: 'images/rayhaan-lion-edp.jpg',
+        affiliateLink: 'https://amzn.to/4ufk96c',
+        category: 'featured'
+    },
+    // Khadlaj Shiyaaka Snow - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-29',
+        name: 'Khadlaj Shiyaaka Snow',
+        price: 0,
+        image: 'images/khadlaj-shiyaaka-snow.jpg',
+        image2: 'images/khadlaj-shiyaaka-snow.jpg',
+        affiliateLink: 'https://amzn.to/4uewho4',
+        category: 'featured'
+    },
+    // KHADLAJ Island EDP - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-30',
+        name: 'KHADLAJ Island EDP',
+        price: 0,
+        image: 'images/khadlaj-island-edp.png',
+        image2: 'images/khadlaj-island-edp.png',
+        affiliateLink: 'https://amzn.to/4at9Owm',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
