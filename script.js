@@ -319,6 +319,16 @@ const amazonProducts = [
         image2: 'images/khadlaj-island-edp.png',
         affiliateLink: 'https://amzn.to/4at9Owm',
         category: 'featured'
+    },
+    // Lattafa Fakhar - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-31',
+        name: 'Lattafa Fakhar',
+        price: 0,
+        image: 'images/lattafa-fakhar.jpg',
+        image2: 'images/lattafa-fakhar.jpg',
+        affiliateLink: 'https://amzn.to/4eaPWze',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
