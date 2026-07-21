@@ -1,22 +1,422 @@
-e// Mobile Navigation Toggle
-const mobileMenu = document.getElementById('mobile-menu');
-const navMenu = document.querySelector('.nav-center');
+// ============================================
+// AMAZON AFFILIATE PRODUCTS SYSTEM
+// ============================================
+// 
+// To add products, simply add objects to the amazonProducts array below.
+// Each product needs:
+//   - id: unique identifier
+//   - name: product name
+//   - price: product price (number)
+//   - originalPrice: original price if on sale (optional)
+//   - image: product image URL
+//   - image2: second image for hover effect (optional)
+//   - affiliateLink: your Amazon affiliate link
+//   - category: product category (optional, for filtering)
+//
+// Example affiliate link format:
+//   https://www.amazon.com/dp/PRODUCT_ID?tag=YOUR_AFFILIATE_TAG
+// ============================================
 
-if (mobileMenu && navMenu) {
-    mobileMenu.addEventListener('click', () => {
+// Amazon Affiliate Products Data
+// Add your products here - this is where you'll manage all your affiliate links
+const amazonProducts = [
+    // Your first Amazon affiliate product
+    {
+        id: 'product-1',
+        name: 'Heated Blanket',
+        price: 0,
+        image: 'images/Gemini_Generated_Image_lk9naalk9naalk9n.png',
+        image2: 'images/Gemini_Generated_Image_lk9naalk9naalk9n.png',
+        affiliateLink: 'https://amzn.to/4sKu8B6',
+        category: 'home'
+    },
+    // Snow Blower
+    {
+        id: 'product-3',
+        name: 'Snow Blower',
+        price: 0,
+        image: 'images/snow-blower.png',
+        image2: 'images/snow-blower.png',
+        affiliateLink: 'https://amzn.to/4romoTZ',
+        category: 'featured'
+    },
+    // Wheel Snow Pusher
+    {
+        id: 'product-4',
+        name: 'Wheel Snow Pusher',
+        price: 0,
+        image: 'images/wheel-snow-pusher.png',
+        image2: 'images/wheel-snow-pusher.png',
+        affiliateLink: 'https://amzn.to/3Z6SiZ4',
+        category: 'featured'
+    },
+    // Vegetable Chopper
+    {
+        id: 'product-5',
+        name: 'Vegetable Chopper',
+        price: 0,
+        image: 'images/vegetable-chopper.png',
+        image2: 'images/vegetable-chopper.png',
+        affiliateLink: 'https://amzn.to/4a8B4iQ',
+        category: 'home'
+    },
+    // Food Cutting Scissors
+    {
+        id: 'product-6',
+        name: 'Food Cutting Scissors',
+        price: 0,
+        image: 'images/food-cutting-scissors.png',
+        image2: 'images/food-cutting-scissors.png',
+        affiliateLink: 'https://amzn.to/4ceqERn',
+        category: 'home'
+    },
+    // Dyson SuperSonic Dryer
+    {
+        id: 'product-7',
+        name: 'Dyson SuperSonic Dryer',
+        price: 0,
+        image: 'images/dyson-supersonic-dryer.png',
+        image2: 'images/dyson-supersonic-dryer.png',
+        affiliateLink: 'https://amzn.to/4knQzIr',
+        category: 'featured'
+    },
+    // Polo Quarter Zip
+    {
+        id: 'product-8',
+        name: 'Polo Quarter Zip',
+        price: 0,
+        image: 'images/polo-quarter-zip.png',
+        image2: 'images/polo-quarter-zip.png',
+        affiliateLink: 'https://amzn.to/4top31G',
+        category: 'featured'
+    },
+    // Tracking Tripod
+    {
+        id: 'product-9',
+        name: 'Tracking Tripod',
+        price: 0,
+        image: 'images/tracking-tripod.png',
+        image2: 'images/tracking-tripod.png',
+        affiliateLink: 'https://amzn.to/4tieVaB',
+        category: 'featured'
+    },
+    // O2 Nose Filter
+    {
+        id: 'product-10',
+        name: 'O2 Nose Filter',
+        price: 0,
+        image: 'images/o2-nose-filter.png',
+        image2: 'images/o2-nose-filter.png',
+        affiliateLink: 'https://amzn.to/4akM3G4',
+        category: 'featured'
+    },
+    // Camera Grip Kit
+    {
+        id: 'product-11',
+        name: 'Camera Grip Kit',
+        price: 0,
+        image: 'images/camera-grip-kit.jpg',
+        image2: 'images/camera-grip-kit.jpg',
+        affiliateLink: 'https://amzn.to/3OataOL',
+        category: 'featured'
+    },
+    // Polo Red
+    {
+        id: 'product-12',
+        name: 'Polo Red',
+        price: 0,
+        image: 'images/polo-red.jpg',
+        image2: 'images/polo-red.jpg',
+        affiliateLink: 'https://amzn.to/4078nhL',
+        category: 'featured'
+    },
+    // Polo Blue
+    {
+        id: 'product-13',
+        name: 'Polo Blue',
+        price: 0,
+        image: 'images/polo-blue.jpg',
+        image2: 'images/polo-blue.jpg',
+        affiliateLink: 'https://amzn.to/40acbij',
+        category: 'featured'
+    },
+    // Azzaro The Most Wanted
+    {
+        id: 'product-14',
+        name: 'Azzaro The Most Wanted',
+        price: 0,
+        image: 'images/azzaro-the-most-wanted.jpg',
+        image2: 'images/azzaro-the-most-wanted.jpg',
+        affiliateLink: 'https://amzn.to/4l2lQRs',
+        category: 'featured'
+    },
+    // Valentino Born In Roma
+    {
+        id: 'product-15',
+        name: 'Valentino Born In Roma',
+        price: 0,
+        image: 'images/valentino-born-in-roma.jpg',
+        image2: 'images/valentino-born-in-roma.jpg',
+        affiliateLink: 'https://amzn.to/3MSZaqq',
+        category: 'featured'
+    },
+    // Bleu De Chanel Parfum
+    {
+        id: 'product-16',
+        name: 'Bleu De Chanel Parfum',
+        price: 0,
+        image: 'images/bleu-de-chanel-parfum.jpg',
+        image2: 'images/bleu-de-chanel-parfum.jpg',
+        affiliateLink: 'https://amzn.to/4m53yQb',
+        category: 'featured'
+    },
+    // Acqua di Giò Profondo
+    {
+        id: 'product-19',
+        name: 'Acqua di Giò Profondo',
+        price: 0,
+        image: 'images/acqua-di-gio-profondo.jpg',
+        image2: 'images/acqua-di-gio-profondo.jpg',
+        affiliateLink: 'https://amzn.to/3OXyiGG',
+        category: 'featured'
+    },
+    // Stronger With You Intensely - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-2',
+        name: 'Stronger With You Intensely',
+        price: 0,
+        image: 'images/stronger-with-you-intensely.jpg',
+        image2: 'images/stronger-with-you-intensely.jpg',
+        affiliateLink: 'https://amzn.to/48UK4Z7',
+        category: 'featured'
+    },
+    // Hawas Ice - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-22',
+        name: 'Hawas Ice',
+        price: 0,
+        image: 'images/hawas-ice.png',
+        image2: 'images/hawas-ice.png',
+        affiliateLink: 'https://amzn.to/4uHYHYr',
+        category: 'featured'
+    },
+    // Platine Blanc - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-23',
+        name: 'Platine Blanc',
+        price: 0,
+        image: 'images/platine-blanc.png',
+        image2: 'images/platine-blanc.png',
+        affiliateLink: 'https://amzn.to/4tqZhsw',
+        category: 'featured'
+    },
+    // DXB EAU DE PARFUM - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-24',
+        name: 'DXB EAU DE PARFUM',
+        price: 0,
+        image: 'images/dxb-eau-de-parfum.png',
+        image2: 'images/dxb-eau-de-parfum.png',
+        affiliateLink: 'https://amzn.to/4tqJrxY',
+        category: 'featured'
+    },
+    // Sospiro Vibrato - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-17',
+        name: 'Sospiro Vibrato',
+        price: 0,
+        image: 'images/sospiro-vibrato.png',
+        image2: 'images/sospiro-vibrato.png',
+        affiliateLink: 'https://amzn.to/3RD2W9l',
+        category: 'featured'
+    },
+    // Dolce&Gabbana Pour Homme - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-20',
+        name: 'Dolce&Gabbana Pour Homme',
+        price: 0,
+        image: 'images/dolce-gabbana-pour-homme.png',
+        image2: 'images/dolce-gabbana-pour-homme.png',
+        affiliateLink: 'https://amzn.to/3RD2W9l',
+        category: 'featured'
+    },
+    // YSL intense - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-18',
+        name: 'YSL intense',
+        price: 0,
+        image: 'images/ysl-intense.png',
+        image2: 'images/ysl-intense.png',
+        affiliateLink: 'https://amzn.to/3PRTY7F',
+        category: 'featured'
+    },
+    // Risvelium Orto Parisi - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-21',
+        name: 'Risvelium Orto Parisi',
+        price: 0,
+        image: 'images/risvelium-orto-parisi.png',
+        image2: 'images/risvelium-orto-parisi.png',
+        affiliateLink: 'https://amzn.to/3PRTY7F',
+        category: 'featured'
+    },
+    // Armaf Infinity edp - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-25',
+        name: 'Armaf Infinity edp',
+        price: 0,
+        image: 'images/armaf-infinity-edp.png',
+        image2: 'images/armaf-infinity-edp.png',
+        affiliateLink: 'https://amzn.to/4v838vy',
+        category: 'featured'
+    },
+    // Khadlaj Island Vanilla Dunes - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-26',
+        name: 'Khadlaj Island Vanilla Dunes',
+        price: 0,
+        image: 'images/khadlaj-island-vanilla-dunes.png',
+        image2: 'images/khadlaj-island-vanilla-dunes.png',
+        affiliateLink: 'https://amzn.to/4vtENRb',
+        category: 'featured'
+    },
+    // Rayhaan Elixir EDP - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-27',
+        name: 'Rayhaan Elixir EDP',
+        price: 0,
+        image: 'images/rayhaan-elixir-edp.jpg',
+        image2: 'images/rayhaan-elixir-edp.jpg',
+        affiliateLink: 'https://amzn.to/4x5Ioq6',
+        category: 'featured'
+    },
+    // Rayhaan Lion EDP - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-28',
+        name: 'Rayhaan Lion EDP',
+        price: 0,
+        image: 'images/rayhaan-lion-edp.jpg',
+        image2: 'images/rayhaan-lion-edp.jpg',
+        affiliateLink: 'https://amzn.to/4ufk96c',
+        category: 'featured'
+    },
+    // Khadlaj Shiyaaka Snow - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-29',
+        name: 'Khadlaj Shiyaaka Snow',
+        price: 0,
+        image: 'images/khadlaj-shiyaaka-snow.jpg',
+        image2: 'images/khadlaj-shiyaaka-snow.jpg',
+        affiliateLink: 'https://amzn.to/4uewho4',
+        category: 'featured'
+    },
+    // KHADLAJ Island EDP - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-30',
+        name: 'KHADLAJ Island EDP',
+        price: 0,
+        image: 'images/khadlaj-island-edp.png',
+        image2: 'images/khadlaj-island-edp.png',
+        affiliateLink: 'https://amzn.to/4at9Owm',
+        category: 'featured'
+    },
+    // Lattafa Fakhar - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-31',
+        name: 'Lattafa Fakhar',
+        price: 0,
+        image: 'images/lattafa-fakhar.jpg',
+        image2: 'images/lattafa-fakhar.jpg',
+        affiliateLink: 'https://amzn.to/4eaPWze',
+        category: 'featured'
+    },
+    // Casio AQ-230A - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-32',
+        name: 'Casio AQ-230A',
+        price: 0,
+        image: 'images/casio-aq-230a.jpg',
+        image2: 'images/casio-aq-230a.jpg',
+        affiliateLink: 'https://amzn.to/4fdIPrN',
+        category: 'featured'
+    }
+    // Add more products here by copying the object above and updating the details
+];
+
+// ============================================
+// SHOPIFY STOREFRONT INTEGRATION
+// ============================================
+// This system allows you to sell your own products via Shopify
+// while also displaying Amazon affiliate products above
+
+// Shopify Configuration
+let SHOPIFY_CONFIG = {
+    store: 'cbpgj6-gb',
+    apiKey: '202eb1236910457febb7ee281668f083',
+    apiVersion: '2023-10',
+    enabled: true
+};
+
+// Shopify Buy Button client
+let shopifyBuyClient = null;
+let shopifyBuyUI = null;
+
+// Product Management System
+let products = [];
+let collections = [];
+
+// Mobile Navigation Toggle - Dropdown Menu
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileDropdown = document.getElementById('mobile-dropdown');
+
+if (mobileMenu && mobileDropdown) {
+    const menuIcon = mobileMenu.querySelector('i');
+    
+    mobileMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = mobileDropdown.classList.toggle('active');
         mobileMenu.classList.toggle('active');
-        navMenu.classList.toggle('active');
+        
+        // Toggle between hamburger and X icon
+        if (isActive) {
+            menuIcon.classList.remove('fa-bars');
+            menuIcon.classList.add('fa-times');
+        } else {
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+        }
     });
 }
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('.nav-link').forEach(link => {
+// Close mobile dropdown when clicking on a link
+document.querySelectorAll('.dropdown-link').forEach(link => {
     link.addEventListener('click', () => {
-        if (mobileMenu && navMenu) {
+        if (mobileDropdown && mobileMenu) {
+            mobileDropdown.classList.remove('active');
             mobileMenu.classList.remove('active');
-            navMenu.classList.remove('active');
+            const menuIcon = mobileMenu.querySelector('i');
+            if (menuIcon) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
         }
     });
+});
+
+// Close mobile dropdown when clicking outside
+document.addEventListener('click', (e) => {
+    if (mobileDropdown && mobileMenu) {
+        const isClickInside = mobileMenu.contains(e.target) || mobileDropdown.contains(e.target);
+        if (!isClickInside && mobileDropdown.classList.contains('active')) {
+            mobileDropdown.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            const menuIcon = mobileMenu.querySelector('i');
+            if (menuIcon) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            }
+        }
+    }
 });
 
 // Smooth scrolling for navigation links
@@ -73,157 +473,6 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// Shopping Cart Functionality
-let cart = [];
-let cartTotal = 0;
-
-// Add to cart function
-function addToCart(productId, productName, price) {
-    const existingItem = cart.find(item => item.id === productId);
-    
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push({
-            id: productId,
-            name: productName,
-            price: price,
-            quantity: 1
-        });
-    }
-    
-    updateCartDisplay();
-    showAddToCartAnimation();
-}
-
-// Remove from cart function
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCartDisplay();
-}
-
-// Update quantity function
-function updateQuantity(productId, change) {
-    const item = cart.find(item => item.id === productId);
-    if (item) {
-        item.quantity += change;
-        if (item.quantity <= 0) {
-            removeFromCart(productId);
-        } else {
-            updateCartDisplay();
-        }
-    }
-}
-
-// Update cart display
-function updateCartDisplay() {
-    const cartCount = document.getElementById('cart-count');
-    const cartItems = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    
-    // Update cart count
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    if (cartCount) {
-        cartCount.textContent = totalItems;
-    }
-    
-    // Update cart items display
-    if (cartItems) {
-        if (cart.length === 0) {
-            cartItems.innerHTML = `
-                <div class="empty-cart">
-                    <i class="fas fa-shopping-cart"></i>
-                    <p>Your cart is empty</p>
-                </div>
-            `;
-        } else {
-            cartItems.innerHTML = cart.map(item => `
-                <div class="cart-item">
-                    <div class="cart-item-image">
-                        <i class="fas fa-tshirt"></i>
-                    </div>
-                    <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                        <div class="cart-item-quantity">
-                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
-                            <span class="quantity">${item.quantity}</span>
-                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
-                        </div>
-                    </div>
-                    <button class="remove-item" onclick="removeFromCart('${item.id}')">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            `).join('');
-        }
-    }
-    
-    // Update total
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    if (cartTotal) {
-        cartTotal.textContent = total.toFixed(2);
-    }
-}
-
-// Toggle cart modal
-function toggleCart() {
-    const cartModal = document.getElementById('cart-modal');
-    if (cartModal) {
-        cartModal.classList.toggle('active');
-    }
-}
-
-// Checkout function
-function checkout() {
-    if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-    }
-    
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-    
-    alert(`Thank you for your purchase!\n\nItems: ${itemCount}\nTotal: $${total.toFixed(2)}\n\nThis would redirect to payment processing.`);
-    
-    // Clear cart after checkout
-    cart = [];
-    updateCartDisplay();
-    toggleCart();
-}
-
-// Add to cart animation
-function showAddToCartAnimation() {
-    const cartBtn = document.querySelector('.nav-icon');
-    if (cartBtn) {
-        cartBtn.style.transform = 'scale(1.2)';
-        cartBtn.style.color = '#dc2626';
-        
-        setTimeout(() => {
-            cartBtn.style.transform = 'scale(1)';
-            cartBtn.style.color = 'white';
-        }, 300);
-    }
-}
-
-// Close cart when clicking outside
-document.addEventListener('click', function(e) {
-    const cartModal = document.getElementById('cart-modal');
-    if (e.target === cartModal) {
-        cartModal.classList.remove('active');
-    }
-});
-
-// Close cart with escape key
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const cartModal = document.getElementById('cart-modal');
-        if (cartModal) {
-            cartModal.classList.remove('active');
-        }
-    }
-});
-
 // Newsletter subscription
 function subscribeEmail() {
     const emailInput = document.querySelector('.newsletter-input');
@@ -246,25 +495,8 @@ function subscribeEmail() {
     }
 }
 
-// Add click handlers for product cards
-document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('click', function(e) {
-        e.preventDefault();
-        const productName = this.querySelector('.product-name').textContent;
-        const productPrice = this.querySelector('.product-price').textContent;
-        const price = parseFloat(productPrice.replace('$', ''));
-        
-        // Generate a unique ID for the product
-        const productId = 'product-' + Math.random().toString(36).substr(2, 9);
-        
-        addToCart(productId, productName, price);
-    });
-    
-    // Add cursor pointer
-    card.style.cursor = 'pointer';
-});
-
 // Hero cards are now non-interactive - only hover effects remain
+// Product cards use Shopify Buy Button for cart functionality
 
 // Newsletter form submission
 document.addEventListener('DOMContentLoaded', function() {
@@ -299,10 +531,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-// Product Management System
-let products = [];
-let collections = [];
 
 // Sample product data structure
 const sampleProducts = [
@@ -398,58 +626,291 @@ function renderProducts(containerSelector, productFilter = null) {
         productsToRender = products.filter(product => product.collection === productFilter);
     }
 
+    // Keep empty spaces blank - don't show any message
     if (productsToRender.length === 0) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <p>No products available</p>
-            </div>
-        `;
+        container.innerHTML = '';
         return;
     }
 
-    container.innerHTML = productsToRender.map(product => `
-        <div class="product-card" data-product-id="${product.id}">
+    container.innerHTML = productsToRender.map((product, index) => {
+        const originalPrice = product.compareAtPrice || product.price * 1.5; // Use compareAtPrice or calculate 50% off
+        const isOnSale = originalPrice > product.price;
+        const image2 = product.images && product.images.length > 1 ? product.images[1] : product.image;
+        
+        return `
+        <div class="product-card" data-product-id="${product.id}" data-product-handle="${product.handle || ''}">
+            ${isOnSale && !product.soldOut ? '<div class="sale-badge">Sale</div>' : ''}
+            ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
             <div class="product-image">
                 <img src="${product.image}" alt="${product.name}" />
-                ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
+                <img src="${image2}" alt="${product.name}" />
             </div>
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-price">$${product.price.toFixed(2)}</p>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <div class="product-price-container">
+                    ${isOnSale ? `<span class="product-price-original">$${originalPrice.toFixed(2)} USD</span>` : ''}
+                    <span class="product-price-usd">$${product.price.toFixed(2)} USD</span>
+                </div>
+            </div>
+            ${product.handle ? `<div class="shopify-buy-button" id="buy-button-${product.id}-${index}" data-product-handle="${product.handle}"></div>` : ''}
         </div>
-    `).join('');
+    `;
+    }).join('');
 
     // Re-attach event listeners to new product cards
     attachProductCardListeners(containerSelector);
+    
+    // Create Shopify Buy Buttons if available
+    if (shopifyBuyUI) {
+        setTimeout(() => createBuyButtonsForProducts(), 100);
+    }
 }
 
-// Function to attach event listeners to product cards
+// Function to render products organized by collections
+function renderProductsByCollections() {
+    // Group products by collection
+    const productsByCollection = {};
+    
+    products.forEach(product => {
+        const collectionName = product.collectionName || 'Other';
+        if (!productsByCollection[collectionName]) {
+            productsByCollection[collectionName] = [];
+        }
+        productsByCollection[collectionName].push(product);
+    });
+
+    // Render first collection in the main section
+    const firstCollection = Object.keys(productsByCollection)[0];
+    if (firstCollection) {
+        const collectionSection = document.querySelector('.collection-section');
+        if (collectionSection) {
+            const title = collectionSection.querySelector('.section-title');
+            if (title) {
+                title.textContent = firstCollection.toUpperCase();
+            }
+        }
+        
+        const mainGrid = document.querySelector('.collection-section .product-grid');
+        if (mainGrid) {
+            renderCollectionProducts(mainGrid, productsByCollection[firstCollection], firstCollection);
+        }
+    }
+
+    // Render featured products
+    const featuredProducts = products.filter(p => p.collection === 'featured' || p.tags?.includes('featured'));
+    if (featuredProducts.length > 0) {
+        const featuredGrid = document.querySelector('.featured-section .product-grid');
+        if (featuredGrid) {
+            const featuredTitle = document.querySelector('.featured-section .section-title');
+            if (featuredTitle) {
+                featuredTitle.textContent = 'FEATURED PRODUCTS';
+            }
+            renderCollectionProducts(featuredGrid, featuredProducts, 'Featured');
+        }
+    } else {
+        // If no featured products, show second collection
+        const secondCollection = Object.keys(productsByCollection)[1];
+        if (secondCollection) {
+            const featuredGrid = document.querySelector('.featured-section .product-grid');
+            if (featuredGrid) {
+                const featuredTitle = document.querySelector('.featured-section .section-title');
+                if (featuredTitle) {
+                    featuredTitle.textContent = secondCollection.toUpperCase();
+                }
+                renderCollectionProducts(featuredGrid, productsByCollection[secondCollection], secondCollection);
+            }
+        }
+    }
+}
+
+// Function to render products for a specific collection
+function renderCollectionProducts(container, productsToRender, collectionName) {
+    if (!container) return;
+
+    // Keep empty spaces blank - don't show any message
+    if (productsToRender.length === 0) {
+        container.innerHTML = '';
+        return;
+    }
+
+    container.innerHTML = productsToRender.map((product, index) => {
+        const originalPrice = product.compareAtPrice || product.price * 1.5; // Use compareAtPrice or calculate 50% off
+        const isOnSale = originalPrice > product.price;
+        const image2 = product.images && product.images.length > 1 ? product.images[1] : product.image;
+        
+        return `
+        <div class="product-card" data-product-id="${product.id}" data-product-handle="${product.handle || ''}">
+            ${isOnSale && !product.soldOut ? '<div class="sale-badge">Sale</div>' : ''}
+            ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}" />
+                <img src="${image2}" alt="${product.name}" />
+            </div>
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <div class="product-price-container">
+                    ${isOnSale ? `<span class="product-price-original">$${originalPrice.toFixed(2)} USD</span>` : ''}
+                    <span class="product-price-usd">$${product.price.toFixed(2)} USD</span>
+                </div>
+            </div>
+            ${product.handle ? `<div class="shopify-buy-button" id="buy-button-${product.id}-${index}" data-product-handle="${product.handle}"></div>` : ''}
+        </div>
+    `;
+    }).join('');
+
+    // Re-attach event listeners - pass the container element directly
+    attachProductCardListenersToContainer(container);
+    
+    // Create Shopify Buy Buttons if available
+    if (shopifyBuyUI) {
+        setTimeout(() => createBuyButtonsForProducts(), 100);
+    }
+}
+
+// Function to attach event listeners to product cards (accepts selector string)
 function attachProductCardListeners(containerSelector) {
     const container = document.querySelector(containerSelector);
     if (!container) return;
+    attachProductCardListenersToContainer(container);
+}
+
+// Function to create Shopify Buy Buttons for products
+function createBuyButtonsForProducts() {
+    if (!shopifyBuyUI) {
+        console.log('⏳ Shopify Buy UI not ready yet');
+        return;
+    }
+
+    document.querySelectorAll('.shopify-buy-button').forEach((buttonContainer, index) => {
+        // Skip if button already created
+        if (buttonContainer.hasAttribute('data-button-created')) {
+            return;
+        }
+
+        const productHandle = buttonContainer.getAttribute('data-product-handle');
+        if (!productHandle) {
+            console.log('⚠️ No product handle found for buy button');
+            return;
+        }
+
+        try {
+            // Create product component but hide everything except the button
+            shopifyBuyUI.createComponent('product', {
+                handle: productHandle,
+                node: buttonContainer,
+                moneyFormat: '${{amount}}',
+                options: {
+                    product: {
+                        contents: {
+                            img: false,
+                            imgWithCarousel: false,
+                            title: false,
+                            price: false,
+                            button: true,
+                            buttonWithQuantity: false
+                        },
+                        styles: {
+                            button: {
+                                'background-color': '#000000',
+                                ':hover': {
+                                    'background-color': '#000000'
+                                },
+                                ':focus': {
+                                    'background-color': '#000000'
+                                },
+                                'width': '100%',
+                                'margin': '0'
+                            }
+                        },
+                        text: {
+                            button: 'Add to cart'
+                        }
+                    },
+                    cart: {
+                        styles: {
+                            button: {
+                                'background-color': '#000000',
+                                ':hover': {
+                                    'background-color': '#000000'
+                                }
+                            }
+                        },
+                        text: {
+                            button: 'Checkout'
+                        }
+                    },
+                    toggle: {
+                        styles: {
+                            toggle: {
+                                'background-color': '#000000',
+                                ':hover': {
+                                    'background-color': '#000000'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Mark as created
+            buttonContainer.setAttribute('data-button-created', 'true');
+        } catch (error) {
+            console.error('Error creating buy button for', productHandle, error);
+        }
+    });
+}
+
+// Function to attach event listeners to product cards (accepts container element)
+function attachProductCardListenersToContainer(container) {
+    if (!container) return;
+
+    // Don't add click handlers if Shopify Buy Button is enabled
+    // The buy buttons will handle the cart functionality
+    if (shopifyBuyUI) {
+        return;
+    }
 
     container.querySelectorAll('.product-card').forEach(card => {
-        card.addEventListener('click', function(e) {
+        // Remove any existing event listeners by cloning
+        const newCard = card.cloneNode(true);
+        card.parentNode.replaceChild(newCard, card);
+        
+        // Add click handler
+        newCard.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
+            
             const productId = this.getAttribute('data-product-id');
+            if (!productId) {
+                console.error('No product ID found on card');
+                return;
+            }
+            
             const product = products.find(p => p.id === productId);
             
-            if (product && !product.soldOut) {
-                addToCart(product.id, product.name, product.price);
-            } else if (product && product.soldOut) {
-                alert('This product is currently sold out.');
+            if (!product) {
+                console.error('Product not found:', productId);
+                return;
             }
+            
+            if (product.soldOut) {
+                alert('This product is currently sold out.');
+                return;
+            }
+            
+            // Product cards use Shopify Buy Button for cart functionality
         });
         
         // Add cursor pointer
-        card.style.cursor = 'pointer';
+        newCard.style.cursor = 'pointer';
         
         // Add hover effects
-        card.addEventListener('mouseenter', function() {
+        newCard.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-5px)';
             this.style.transition = 'transform 0.3s ease';
         });
         
-        card.addEventListener('mouseleave', function() {
+        newCard.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0)';
         });
     });
@@ -473,9 +934,14 @@ function importProducts(productData) {
         // Replace products array
         products = productData;
         
-        // Re-render all product sections
-        renderProducts('.collection-section .product-grid', 'myrtle');
-        renderProducts('.featured-section .product-grid', 'featured');
+        // Re-render products organized by collections
+        if (products.length > 0 && products.some(p => p.collectionName)) {
+            renderProductsByCollections();
+        } else {
+            // Fallback to old method if no collection names
+            renderProducts('.collection-section .product-grid', 'myrtle');
+            renderProducts('.featured-section .product-grid', 'featured');
+        }
         
         console.log(`Successfully imported ${productData.length} products!`);
         return true;
@@ -551,15 +1017,196 @@ function searchProducts(query) {
     );
 }
 
-// Shopify Integration Configuration
-const SHOPIFY_CONFIG = {
-    store: 'your-store-name', // Replace with your Shopify store name (without .myshopify.com)
-    apiKey: 'your-api-key',   // Replace with your Shopify API key
-    apiVersion: '2023-10',
-    enabled: false // Set to true when ready to connect to Shopify
-};
+// ============================================
+// SEARCH FUNCTIONALITY
+// ============================================
 
-// Shopify API Integration
+// Search all products (Amazon + Shopify)
+function searchAllProducts(query) {
+    if (!query || query.trim() === '') {
+        return [];
+    }
+    
+    const searchTerm = query.toLowerCase().trim();
+    const results = [];
+    
+    // Search Amazon products
+    amazonProducts.forEach(product => {
+        const productName = product.name.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            // Calculate similarity score (simple: position of match)
+            const matchIndex = productName.indexOf(searchTerm);
+            const similarity = matchIndex === 0 ? 100 : 100 - matchIndex;
+            results.push({
+                ...product,
+                type: 'amazon',
+                similarity: similarity
+            });
+        }
+    });
+    
+    // Search Shopify products
+    products.forEach(product => {
+        const productName = product.name.toLowerCase();
+        if (productName.includes(searchTerm)) {
+            const matchIndex = productName.indexOf(searchTerm);
+            const similarity = matchIndex === 0 ? 100 : 100 - matchIndex;
+            results.push({
+                ...product,
+                type: 'shopify',
+                similarity: similarity
+            });
+        }
+    });
+    
+    // Sort by similarity (most similar first)
+    return results.sort((a, b) => b.similarity - a.similarity);
+}
+
+// Display search results
+function displaySearchResults(query) {
+    const resultsContainer = document.getElementById('search-results');
+    if (!resultsContainer) return;
+    
+    const searchResults = searchAllProducts(query);
+    
+    if (query.trim() === '') {
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.remove('empty');
+        return;
+    }
+    
+    if (searchResults.length === 0) {
+        resultsContainer.innerHTML = '<div class="search-results empty">No products found</div>';
+        resultsContainer.classList.add('empty');
+        return;
+    }
+    
+    resultsContainer.classList.remove('empty');
+    resultsContainer.innerHTML = searchResults.map(product => {
+        const isAmazon = product.type === 'amazon';
+        const productLink = isAmazon ? product.affiliateLink : '#';
+        const productImage = product.image || 'https://via.placeholder.com/200x200';
+        const productPrice = product.price > 0 ? `$${product.price.toFixed(2)}` : '';
+        const productType = isAmazon ? 'Featured' : 'Our Store';
+        
+        return `
+            <a href="${productLink}" ${isAmazon ? 'target="_blank" rel="nofollow sponsored"' : ''} class="search-result-item">
+                <img src="${productImage}" alt="${product.name}" class="search-result-image" />
+                <div class="search-result-info">
+                    <div class="search-result-name">${product.name}</div>
+                    ${productPrice ? `<div class="search-result-price">${productPrice} USD</div>` : ''}
+                    <div class="search-result-type">${productType}</div>
+                </div>
+            </a>
+        `;
+    }).join('');
+}
+
+// Open search modal
+function openSearchModal() {
+    const searchModal = document.getElementById('search-modal');
+    const searchInput = document.getElementById('search-input');
+    
+    if (searchModal) {
+        searchModal.classList.add('active');
+        // Focus input after a short delay to ensure modal is visible
+        setTimeout(() => {
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }, 100);
+    }
+}
+
+// Close search modal
+function closeSearchModal() {
+    const searchModal = document.getElementById('search-modal');
+    const searchInput = document.getElementById('search-input');
+    
+    if (searchModal) {
+        searchModal.classList.remove('active');
+    }
+    
+    if (searchInput) {
+        searchInput.value = '';
+    }
+    
+    // Clear results
+    const resultsContainer = document.getElementById('search-results');
+    if (resultsContainer) {
+        resultsContainer.innerHTML = '';
+        resultsContainer.classList.remove('empty');
+    }
+}
+
+// Initialize search functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const searchBtn = document.querySelector('.search-btn');
+    const searchModal = document.getElementById('search-modal');
+    const searchCloseBtn = document.getElementById('search-close');
+    const searchInput = document.getElementById('search-input');
+    
+    // Open search modal when search button is clicked
+    if (searchBtn) {
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openSearchModal();
+        });
+    }
+    
+    // Close search modal when close button is clicked
+    if (searchCloseBtn) {
+        searchCloseBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeSearchModal();
+        });
+    }
+    
+    // Close search modal when clicking outside
+    if (searchModal) {
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) {
+                closeSearchModal();
+            }
+        });
+    }
+    
+    // Close search modal with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchModal && searchModal.classList.contains('active')) {
+            closeSearchModal();
+        }
+    });
+    
+    // Search as user types
+    if (searchInput) {
+        let searchTimeout;
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            const query = e.target.value;
+            
+            // Debounce search for better performance
+            searchTimeout = setTimeout(() => {
+                displaySearchResults(query);
+            }, 150);
+        });
+        
+        // Handle Enter key
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const query = searchInput.value.trim();
+                if (query) {
+                    displaySearchResults(query);
+                }
+            }
+        });
+    }
+});
+
+
+// Shopify API Integration - Fetch products from collections
 async function fetchProductsFromShopify() {
     if (!SHOPIFY_CONFIG.enabled) {
         console.log('Shopify integration disabled. Using sample data.');
@@ -567,11 +1214,59 @@ async function fetchProductsFromShopify() {
     }
 
     try {
-        const response = await fetch(`https://${SHOPIFY_CONFIG.store}.myshopify.com/admin/api/${SHOPIFY_CONFIG.apiVersion}/products.json`, {
-            headers: {
-                'X-Shopify-Access-Token': SHOPIFY_CONFIG.apiKey,
-                'Content-Type': 'application/json'
+        // First, get all collections and their products
+        const query = `
+            query {
+                collections(first: 20) {
+                    edges {
+                        node {
+                            id
+                            title
+                            handle
+                            products(first: 50) {
+                                edges {
+                                    node {
+                                        id
+                                        title
+                                        handle
+                                        description
+                                        images(first: 2) {
+                                            edges {
+                                                node {
+                                                    url
+                                                }
+                                            }
+                                        }
+                                        variants(first: 1) {
+                                            edges {
+                                                node {
+                                                    price {
+                                                        amount
+                                                    }
+                                                    compareAtPrice {
+                                                        amount
+                                                    }
+                                                    availableForSale
+                                                }
+                                            }
+                                        }
+                                        tags
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
+        `;
+
+        const response = await fetch(`https://${SHOPIFY_CONFIG.store}.myshopify.com/api/2023-10/graphql.json`, {
+            method: 'POST',
+            headers: {
+                'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.apiKey,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query })
         });
 
         if (!response.ok) {
@@ -580,22 +1275,63 @@ async function fetchProductsFromShopify() {
 
         const data = await response.json();
         
-        // Convert Shopify products to our format
-        const shopifyProducts = data.products.map(product => ({
-            id: product.id.toString(),
-            name: product.title.toUpperCase(),
-            price: parseFloat(product.variants[0]?.price || 0),
-            image: product.images[0]?.src || 'https://via.placeholder.com/400x400',
-            soldOut: !product.variants[0]?.available || false,
-            collection: product.tags.includes('featured') ? 'featured' : 'myrtle',
-            description: product.body_html,
-            handle: product.handle,
-            tags: product.tags.split(',').map(tag => tag.trim())
-        }));
+        // Extract products from all collections
+        const allProducts = [];
+        
+        if (data.data?.collections?.edges) {
+            data.data.collections.edges.forEach(collectionEdge => {
+                const collection = collectionEdge.node;
+                const collectionName = collection.title.toLowerCase();
+                
+                if (collection.products?.edges) {
+                    collection.products.edges.forEach(productEdge => {
+                        const product = productEdge.node;
+                        const variant = product.variants.edges[0]?.node;
+                        const images = product.images.edges || [];
+                        const primaryImage = images[0]?.node;
+                        const secondaryImage = images[1]?.node || primaryImage;
+                        
+                        // Determine collection assignment
+                        let productCollection = 'myrtle';
+                        if (product.tags.includes('featured') || collectionName.includes('featured')) {
+                            productCollection = 'featured';
+                        } else if (collectionName.includes('myrtle')) {
+                            productCollection = 'myrtle';
+                        }
+                        
+                        allProducts.push({
+                            id: product.id.split('/').pop(), // Extract ID from GraphQL ID
+                            name: product.title.toUpperCase(),
+                            price: parseFloat(variant?.price?.amount || 0),
+                            compareAtPrice: variant?.compareAtPrice?.amount ? parseFloat(variant.compareAtPrice.amount) : null,
+                            image: primaryImage?.url || 'https://via.placeholder.com/400x400',
+                            images: images.map(img => img.node.url),
+                            soldOut: !variant?.availableForSale || false,
+                            collection: productCollection,
+                            description: product.description,
+                            handle: product.handle,
+                            tags: product.tags,
+                            collectionName: collection.title
+                        });
+                    });
+                }
+            });
+        }
+
+        // Remove duplicates (products might be in multiple collections)
+        const uniqueProducts = [];
+        const seenIds = new Set();
+        
+        allProducts.forEach(product => {
+            if (!seenIds.has(product.id)) {
+                seenIds.add(product.id);
+                uniqueProducts.push(product);
+            }
+        });
 
         // Import the products
-        importProducts(shopifyProducts);
-        console.log(`✅ Successfully loaded ${shopifyProducts.length} products from Shopify!`);
+        importProducts(uniqueProducts);
+        console.log(`✅ Successfully loaded ${uniqueProducts.length} products from ${data.data?.collections?.edges?.length || 0} collections!`);
         return true;
 
     } catch (error) {
@@ -610,11 +1346,31 @@ async function fetchCollectionsFromShopify() {
     if (!SHOPIFY_CONFIG.enabled) return false;
 
     try {
-        const response = await fetch(`https://${SHOPIFY_CONFIG.store}.myshopify.com/admin/api/${SHOPIFY_CONFIG.apiVersion}/collections.json`, {
-            headers: {
-                'X-Shopify-Access-Token': SHOPIFY_CONFIG.apiKey,
-                'Content-Type': 'application/json'
+        // Use Storefront API for collections to avoid CORS issues
+        const query = `
+            query {
+                collections(first: 20) {
+                    edges {
+                        node {
+                            id
+                            title
+                            handle
+                            image {
+                                url
+                            }
+                        }
+                    }
+                }
             }
+        `;
+
+        const response = await fetch(`https://${SHOPIFY_CONFIG.store}.myshopify.com/api/2023-10/graphql.json`, {
+            method: 'POST',
+            headers: {
+                'X-Shopify-Storefront-Access-Token': SHOPIFY_CONFIG.apiKey,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ query })
         });
 
         if (!response.ok) {
@@ -622,11 +1378,11 @@ async function fetchCollectionsFromShopify() {
         }
 
         const data = await response.json();
-        collections = data.collections.map(collection => ({
-            id: collection.id,
-            title: collection.title,
-            handle: collection.handle,
-            image: collection.image?.src || 'https://via.placeholder.com/400x300'
+        collections = data.data.collections.edges.map(edge => ({
+            id: edge.node.id.split('/').pop(),
+            title: edge.node.title,
+            handle: edge.node.handle,
+            image: edge.node.image?.url || 'https://via.placeholder.com/400x300'
         }));
 
         console.log(`✅ Successfully loaded ${collections.length} collections from Shopify!`);
@@ -638,46 +1394,278 @@ async function fetchCollectionsFromShopify() {
     }
 }
 
-// Initialize with sample data or Shopify
-async function initializeProducts() {
-    // Try to load from Shopify first
+// ============================================
+// AMAZON PRODUCT RENDERING FUNCTIONS
+// ============================================
+
+// Render Amazon affiliate products
+function renderAmazonProducts() {
+    const productGrid = document.getElementById('amazon-products-grid');
+    if (!productGrid) {
+        console.error('⚠️ Product grid not found. Make sure id="amazon-products-grid" exists in HTML.');
+        return;
+    }
+
+    console.log(`🔄 Rendering ${amazonProducts.length} Amazon products...`);
+
+    if (amazonProducts.length === 0) {
+        productGrid.innerHTML = '';
+        console.log('📦 No Amazon products to display. Add products to the amazonProducts array in script.js');
+        return;
+    }
+
+    // Latest-added first: render in reverse order so newest product (last in the array) is at the top
+    productGrid.innerHTML = [...amazonProducts].reverse().map((product) => {
+        const isOnSale = product.originalPrice && product.originalPrice > product.price;
+        const image2 = product.image2 || product.image;
+        const showPrice = product.price > 0;
+        
+        return `
+            <div class="product-card amazon-product-card" data-product-id="${product.id}">
+                ${isOnSale ? '<div class="sale-badge">Sale</div>' : ''}
+                <a href="${product.affiliateLink}" target="_blank" rel="nofollow sponsored" class="product-link">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" />
+                        <img src="${image2}" alt="${product.name}" />
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        ${showPrice ? `
+                        <div class="product-price-container">
+                            ${isOnSale ? `<span class="product-price-original">$${product.originalPrice.toFixed(2)} USD</span>` : ''}
+                            <span class="product-price-usd">$${product.price.toFixed(2)} USD</span>
+                        </div>
+                        ` : ''}
+                        <div class="amazon-badge">View on Amazon →</div>
+                    </div>
+                </a>
+            </div>
+        `;
+    }).join('');
+
+    console.log(`✅ Rendered ${amazonProducts.length} Amazon affiliate products`);
+}
+
+// Initialize Amazon products on page load
+function initializeAmazonProducts() {
+    renderAmazonProducts();
+}
+
+// On Android, attempt to open Amazon app first, then fall back to the affiliate URL.
+function initializeAmazonAppDeepLinks() {
+    document.addEventListener('click', (event) => {
+        const amazonLink = event.target.closest('.amazon-product-card .product-link');
+        if (!amazonLink) return;
+
+        const affiliateUrl = amazonLink.getAttribute('href');
+        if (!affiliateUrl) return;
+
+        const isAndroid = /Android/i.test(navigator.userAgent);
+        if (!isAndroid) return;
+
+        event.preventDefault();
+
+        const normalizedUrl = affiliateUrl.replace(/^https?:\/\//i, '');
+        const intentUrl = `intent://${normalizedUrl}#Intent;scheme=https;package=com.amazon.mShop.android.shopping;S.browser_fallback_url=${encodeURIComponent(affiliateUrl)};end`;
+        window.location.href = intentUrl;
+    });
+}
+
+// Render Shopify products to the shopify section
+function renderShopifyProducts() {
+    const productGrid = document.getElementById('shopify-products-grid');
+    if (!productGrid) {
+        console.log('⚠️ Shopify product grid not found');
+        return;
+    }
+
+    if (products.length === 0) {
+        productGrid.innerHTML = '';
+        console.log('📦 No Shopify products to display.');
+        return;
+    }
+
+    productGrid.innerHTML = products.map((product, index) => {
+        const originalPrice = product.compareAtPrice || product.price * 1.5;
+        const isOnSale = originalPrice > product.price;
+        const image2 = product.images && product.images.length > 1 ? product.images[1] : product.image;
+        
+        return `
+            <div class="product-card shopify-product-card" data-product-id="${product.id}" data-product-handle="${product.handle || ''}">
+                ${isOnSale && !product.soldOut ? '<div class="sale-badge">Sale</div>' : ''}
+                ${product.soldOut ? '<div class="sold-out-badge">Sold Out</div>' : ''}
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}" />
+                    <img src="${image2}" alt="${product.name}" />
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <div class="product-price-container">
+                        ${isOnSale ? `<span class="product-price-original">$${originalPrice.toFixed(2)} USD</span>` : ''}
+                        <span class="product-price-usd">$${product.price.toFixed(2)} USD</span>
+                    </div>
+                </div>
+                ${product.handle ? `<div class="shopify-buy-button" id="buy-button-${product.id}-${index}" data-product-handle="${product.handle}"></div>` : ''}
+            </div>
+        `;
+    }).join('');
+
+    // Create Shopify Buy Buttons if available
+    if (shopifyBuyUI) {
+        setTimeout(() => createBuyButtonsForProducts(), 100);
+    }
+
+    console.log(`✅ Rendered ${products.length} Shopify products`);
+}
+
+// Initialize Shopify products
+async function initializeShopifyProducts() {
+    if (!SHOPIFY_CONFIG.enabled) {
+        console.log('📦 Shopify integration disabled.');
+        return;
+    }
+
+    // Try to load from Shopify
     const shopifyLoaded = await fetchProductsFromShopify();
     
-    if (!shopifyLoaded) {
-        // Fallback to sample data
-        products = [...sampleProducts];
-        console.log('📦 Using sample product data');
+    if (shopifyLoaded && products.length > 0) {
+        renderShopifyProducts();
+    } else {
+        const productGrid = document.getElementById('shopify-products-grid');
+        if (productGrid) {
+            productGrid.innerHTML = '';
+        }
     }
-    
-    // Load collections
-    await fetchCollectionsFromShopify();
-    
-    // Render products
-    renderProducts('.collection-section .product-grid', 'myrtle');
-    renderProducts('.featured-section .product-grid', 'featured');
+}
+
+// Initialize Shopify Buy Button
+function initializeShopifyBuyButton() {
+    if (!window.ShopifyBuy) {
+        console.log('⏳ Waiting for Shopify Buy Button SDK to load...');
+        setTimeout(initializeShopifyBuyButton, 100);
+        return;
+    }
+
+    if (window.ShopifyBuy.UI) {
+        createShopifyBuyClient();
+    } else {
+        window.ShopifyBuy.onReady = createShopifyBuyClient;
+    }
+}
+
+function createShopifyBuyClient() {
+    if (!SHOPIFY_CONFIG.store || !SHOPIFY_CONFIG.apiKey) {
+        console.log('⚠️ Shopify credentials not set');
+        return;
+    }
+
+    try {
+        shopifyBuyClient = ShopifyBuy.buildClient({
+            domain: `${SHOPIFY_CONFIG.store}.myshopify.com`,
+            storefrontAccessToken: SHOPIFY_CONFIG.apiKey
+        });
+
+        ShopifyBuy.UI.onReady(shopifyBuyClient).then(function(ui) {
+            shopifyBuyUI = ui;
+            console.log('✅ Shopify Buy Button initialized');
+            // Create buy buttons for existing products
+            createBuyButtonsForProducts();
+        });
+    } catch (error) {
+        console.error('❌ Error initializing Shopify Buy Button:', error);
+    }
+}
+
+// Save Shopify credentials to localStorage
+function saveShopifyCredentials(storeName, apiKey) {
+    try {
+        localStorage.setItem('shopify_store', storeName);
+        localStorage.setItem('shopify_api_key', apiKey);
+        localStorage.setItem('shopify_enabled', 'true');
+        console.log('✅ Shopify credentials saved');
+    } catch (error) {
+        console.error('❌ Error saving credentials:', error);
+    }
+}
+
+// Load Shopify credentials from localStorage
+function loadShopifyCredentials() {
+    try {
+        const store = localStorage.getItem('shopify_store');
+        const apiKey = localStorage.getItem('shopify_api_key');
+        const enabled = localStorage.getItem('shopify_enabled') === 'true';
+        
+        if (store && apiKey && enabled) {
+            return { store, apiKey, enabled };
+        }
+        return null;
+    } catch (error) {
+        console.error('❌ Error loading credentials:', error);
+        return null;
+    }
+}
+
+// Clear saved Shopify credentials
+function clearShopifyCredentials() {
+    try {
+        localStorage.removeItem('shopify_store');
+        localStorage.removeItem('shopify_api_key');
+        localStorage.removeItem('shopify_enabled');
+        console.log('✅ Shopify credentials cleared');
+    } catch (error) {
+        console.error('❌ Error clearing credentials:', error);
+    }
 }
 
 // Function to enable Shopify integration
-function enableShopifyIntegration(storeName, apiKey) {
+function enableShopifyIntegration(storeName, apiKey, saveCredentials = true) {
     SHOPIFY_CONFIG.store = storeName;
     SHOPIFY_CONFIG.apiKey = apiKey;
     SHOPIFY_CONFIG.enabled = true;
-    
+
+    // Save credentials to localStorage for persistence
+    if (saveCredentials) {
+        saveShopifyCredentials(storeName, apiKey);
+    }
+
     console.log('🔄 Shopify integration enabled. Reloading products...');
-    initializeProducts();
+    initializeShopifyProducts();
+    
+    // Initialize Buy Button
+    initializeShopifyBuyButton();
 }
 
 // Function to disable Shopify integration
 function disableShopifyIntegration() {
     SHOPIFY_CONFIG.enabled = false;
-    console.log('📦 Shopify integration disabled. Using sample data.');
-    initializeProducts();
+    console.log('📦 Shopify integration disabled.');
+    products = [];
+    // Clear product grids
+    const collectionGrid = document.querySelector('.collection-section .product-grid');
+    const featuredGrid = document.querySelector('.featured-section .product-grid');
+    if (collectionGrid) collectionGrid.innerHTML = '';
+    if (featuredGrid) featuredGrid.innerHTML = '';
 }
 
-// Initialize cart display
+// Initialize both Amazon and Shopify products on page load
 document.addEventListener('DOMContentLoaded', function() {
-    updateCartDisplay();
-    initializeProducts();
+    // Initialize Amazon affiliate products (always show)
+    initializeAmazonProducts();
+    initializeAmazonAppDeepLinks();
+    
+    // Initialize Shopify products (if enabled)
+    if (SHOPIFY_CONFIG.enabled && SHOPIFY_CONFIG.store && SHOPIFY_CONFIG.apiKey) {
+        console.log('🔄 Auto-connecting to Shopify...');
+        initializeShopifyProducts();
+        initializeShopifyBuyButton();
+    } else {
+        // Check for saved credentials in localStorage
+        const savedCredentials = loadShopifyCredentials();
+        if (savedCredentials) {
+            console.log('🔄 Auto-connecting to Shopify with saved credentials...');
+            enableShopifyIntegration(savedCredentials.store, savedCredentials.apiKey, false);
+        }
+    }
 });
 
 // Add hover effects to product cards

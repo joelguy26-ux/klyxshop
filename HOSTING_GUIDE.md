@@ -144,3 +144,6 @@ const PROXY_URL = 'https://cors-anywhere.herokuapp.com/';
 **Yes, you need hosting for Shopify integration**, but it's **free and easy** with services like Netlify. The local server is perfect for development, and Netlify is perfect for going live!
 
 **Start with the local server, then deploy to Netlify when ready!** 🚀
+
+
+
