@@ -310,16 +310,6 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/4eaPWze',
         category: 'featured'
     },
-    // Casio AQ-230A - latest (renders first; grid uses reversed order)
-    {
-        id: 'product-32',
-        name: 'Casio AQ-230A',
-        price: 0,
-        image: 'images/casio-aq-230a.jpg',
-        image2: 'images/casio-aq-230a.jpg',
-        affiliateLink: 'https://amzn.to/4fdIPrN',
-        category: 'featured'
-    },
     // Parfums de Marly Althair - latest (renders first; grid uses reversed order)
     {
         id: 'product-33',
@@ -348,6 +338,16 @@ const amazonProducts = [
         image: 'images/stronger-with-you-intensely.jpg',
         image2: 'images/stronger-with-you-intensely.jpg',
         affiliateLink: 'https://amzn.to/3RRyiJI',
+        category: 'featured'
+    },
+    // Casio AQ-230GA-9D - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-32',
+        name: 'Casio AQ-230GA-9D',
+        price: 0,
+        image: 'images/casio-aq-230ga-9d.png',
+        image2: 'images/casio-aq-230ga-9d.png',
+        affiliateLink: 'https://amzn.to/3ThIvj1',
         category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
