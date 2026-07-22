@@ -140,16 +140,6 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/40acbij',
         category: 'featured'
     },
-    // Azzaro The Most Wanted
-    {
-        id: 'product-14',
-        name: 'Azzaro The Most Wanted',
-        price: 0,
-        image: 'images/azzaro-the-most-wanted.jpg',
-        image2: 'images/azzaro-the-most-wanted.jpg',
-        affiliateLink: 'https://amzn.to/4l2lQRs',
-        category: 'featured'
-    },
     // Valentino Born In Roma
     {
         id: 'product-15',
@@ -178,16 +168,6 @@ const amazonProducts = [
         image: 'images/acqua-di-gio-profondo.jpg',
         image2: 'images/acqua-di-gio-profondo.jpg',
         affiliateLink: 'https://amzn.to/3OXyiGG',
-        category: 'featured'
-    },
-    // Stronger With You Intensely - latest (renders first; grid uses reversed order)
-    {
-        id: 'product-2',
-        name: 'Stronger With You Intensely',
-        price: 0,
-        image: 'images/stronger-with-you-intensely.jpg',
-        image2: 'images/stronger-with-you-intensely.jpg',
-        affiliateLink: 'https://amzn.to/48UK4Z7',
         category: 'featured'
     },
     // Hawas Ice - latest (renders first; grid uses reversed order)
@@ -338,6 +318,36 @@ const amazonProducts = [
         image: 'images/casio-aq-230a.jpg',
         image2: 'images/casio-aq-230a.jpg',
         affiliateLink: 'https://amzn.to/4fdIPrN',
+        category: 'featured'
+    },
+    // Parfums de Marly Althair - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-33',
+        name: 'PARFUMS DE MARLY Althair',
+        price: 0,
+        image: 'images/parfums-de-marly-althair.jpg',
+        image2: 'images/parfums-de-marly-althair.jpg',
+        affiliateLink: 'https://amzn.to/4xhhjQn',
+        category: 'featured'
+    },
+    // Azzaro The Most Wanted - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-14',
+        name: 'Azzaro The Most Wanted',
+        price: 0,
+        image: 'images/azzaro-the-most-wanted.jpg',
+        image2: 'images/azzaro-the-most-wanted.jpg',
+        affiliateLink: 'https://amzn.to/4pBg8Z9',
+        category: 'featured'
+    },
+    // Stronger With You Intensely - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-2',
+        name: 'Stronger With You Intensely',
+        price: 0,
+        image: 'images/stronger-with-you-intensely.jpg',
+        image2: 'images/stronger-with-you-intensely.jpg',
+        affiliateLink: 'https://amzn.to/3RRyiJI',
         category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
