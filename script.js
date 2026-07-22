@@ -340,9 +340,19 @@ const amazonProducts = [
         affiliateLink: 'https://amzn.to/3RRyiJI',
         category: 'featured'
     },
-    // Casio AQ-230GA-9D - latest (renders first; grid uses reversed order)
+    // Casio AQ-230A - latest (renders first; grid uses reversed order)
     {
         id: 'product-32',
+        name: 'Casio AQ-230A',
+        price: 0,
+        image: 'images/casio-aq-230a.jpg',
+        image2: 'images/casio-aq-230a.jpg',
+        affiliateLink: 'https://amzn.to/4fdIPrN',
+        category: 'featured'
+    },
+    // Casio AQ-230GA-9D - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-34',
         name: 'Casio AQ-230GA-9D',
         price: 0,
         image: 'images/casio-aq-230ga-9d.png',
