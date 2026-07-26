@@ -359,6 +359,26 @@ const amazonProducts = [
         image2: 'images/casio-aq-230ga-9d.png',
         affiliateLink: 'https://amzn.to/3ThIvj1',
         category: 'featured'
+    },
+    // G-Shock GM2110D - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-35',
+        name: 'G-Shock GM2110D',
+        price: 0,
+        image: 'images/g-shock-gm2110d.jpg',
+        image2: 'images/g-shock-gm2110d.jpg',
+        affiliateLink: 'https://amzn.to/3TAHDWO',
+        category: 'featured'
+    },
+    // G-Shock GM2100 - latest (renders first; grid uses reversed order)
+    {
+        id: 'product-36',
+        name: 'G-Shock GM2100',
+        price: 0,
+        image: 'images/g-shock-gm2100.avif',
+        image2: 'images/g-shock-gm2100.avif',
+        affiliateLink: 'https://amzn.to/4weUoVr',
+        category: 'featured'
     }
     // Add more products here by copying the object above and updating the details
 ];
